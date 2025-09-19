@@ -117,4 +117,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
     if (validationMessage || (!isValidUrl(displayUrl) && url.trim())) {
       return (
         <div className="relative">
-          <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-lg" />
+          <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-lg" />
+          <div className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-pink-400/20 rounded-full blur-sm"></div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="relative">
+        <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-lg group-hover:text-yellow-200 transition-all duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 rounded-full blur-sm opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-300/10 to-orange-300/10 rounded-full blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
+      </div>
+    )
+  }
+
+  const getButtonColor = () => {
+    if (isLoading) return 'bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-600 hover:from-blue-600 hover:via-cyan-600 hover:to-indigo-700 shadow-blue-500/40'
+    if (validationMessage || (!isValidUrl(displayUrl) && url.trim())) return 'bg-gradient-to-r from-red-500 via-pink-500 to-orange-600 hover:from-red-600 hover:via-pink-600 hover:to-orange-700 shadow-red-500/40'
+    return 'bg-gradient-to-r from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 shadow-emerald-500/40'
+  }
+
