@@ -97,4 +97,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
     }
   }
 
-  const getButtonText = () => {
+  const getButtonText = () => {
+    if (isLoading) return 'Scanning the website...'
+    if (validationMessage) return validationMessage
+    if (!isValidUrl(displayUrl) && url.trim()) return 'Invalid URL format'
+    return 'Scan Website'
+  }
+
+  const getButtonIcon = () => {
+    if (isLoading) {
+      return (
+        <div className="relative">
+          <Loader className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-white drop-shadow-lg" />
+          <div className="absolute inset-0 w-4 h-4 sm:w-5 sm:h-5 animate-spin bg-gradient-to-r from-blue-400/30 to-cyan-400/30 rounded-full blur-sm opacity-50"></div>
+        </div>
+      )
+    }
+
+    if (validationMessage || (!isValidUrl(displayUrl) && url.trim())) {
+      return (
+        <div className="relative">
+          <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-lg" />
