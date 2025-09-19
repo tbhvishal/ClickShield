@@ -77,4 +77,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
       if (!url.hostname.includes('.')) {
         return false // No TLD
       }
-
+
+      // Check for valid TLD (basic check)
+      const hostname = url.hostname.toLowerCase()
+      const validTlds = ['.com', '.org', '.net', '.edu', '.gov', '.mil', '.info', '.biz', '.co', '.io', '.dev', '.app']
+      const hasValidTld = validTlds.some(tld => hostname.endsWith(tld)) || hostname.includes('.')
+
+      if (!hasValidTld) {
+        return false // Invalid or missing TLD
+      }
+
+      if (hostname.includes('..') || hostname.startsWith('.') || hostname.endsWith('.')) {
+        return false
+      }
+
+      return true
+    } catch (_) {
+      return false
+    }
+  }
+
+  const getButtonText = () => {
