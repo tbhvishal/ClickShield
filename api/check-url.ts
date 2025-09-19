@@ -57,4 +57,24 @@ const checkSSL = async (url: string): Promise<boolean> => {
       req.on('timeout', () => {
         req.destroy();
         resolve(false);
-      });
+      });
+      req.end();
+    });
+  } catch {
+    return false;
+  }
+};
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Helper to check if a domain is reachable (DNS lookup)
+  const isDomainReachable = async (hostname: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      dns.lookup(hostname, (err) => {
+        resolve(!err);
+      });
+    });
