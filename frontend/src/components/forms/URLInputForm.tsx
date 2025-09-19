@@ -257,4 +257,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
 
             {/* Glow rings */}
             <div className="absolute inset-0 rounded-xl ring-1 ring-white/20 group-hover:ring-white/40 transition-all duration-500"></div>
-            <div className="absolute inset-0 rounded-xl ring-2 ring-white/10 group-hover:ring-white/30 transition-all duration-500"></div>
+            <div className="absolute inset-0 rounded-xl ring-2 ring-white/10 group-hover:ring-white/30 transition-all duration-500"></div>
+
+            {/* Inner glow */}
+            <div className={`absolute inset-1 rounded-lg transition-opacity duration-500 ${
+              isLoading
+                ? 'bg-gradient-to-r from-blue-400/30 via-cyan-400/30 to-indigo-400/30 opacity-0 group-hover:opacity-100'
+                : validationMessage || (!isValidUrl(displayUrl) && url.trim())
+                ? 'bg-gradient-to-r from-red-400/30 via-pink-400/30 to-orange-400/30 opacity-0 group-hover:opacity-100'
+                : 'bg-gradient-to-r from-emerald-400/30 via-green-400/30 to-teal-400/30 opacity-0 group-hover:opacity-100'
+            }`}></div>
+
+            {/* Particles */}
+            <div className="absolute top-2 left-4 w-1 h-1 bg-white/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
+            <div className="absolute top-3 right-6 w-0.5 h-0.5 bg-white/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+            <div className="absolute bottom-2 right-4 w-1 h-1 bg-white/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            <div className="absolute bottom-3 left-6 w-0.5 h-0.5 bg-white/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.6s' }}></div>
+
+            <div className="relative flex items-center justify-center space-x-2 z-10">
+              <div className="relative p-1 rounded-full bg-white/10 group-hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 group-hover:border-white/30 shadow-inner group-hover:shadow-white/20">
+                <div className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:drop-shadow-2xl">
+                  {getButtonIcon()}
