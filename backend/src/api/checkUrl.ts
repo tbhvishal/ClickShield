@@ -117,4 +117,34 @@ router.post('/check-url', async (req: Request, res: Response) => {
     return res.status(400).json({
       error: 'Invalid URL format.',
       details: 'Please provide a properly formatted URL.'
-    });
+    });
+  }
+  const apiKey = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({
+      error: 'Service configuration error.',
+      details: 'Google Safe Browsing API key not configured.'
+    });
+  }
+
+  for (const variant of urlVariants) {
+    const cachedResult = getCachedResult(variant);
+    if (cachedResult && cachedResult.safe === false) {
+      return res.json({
+        ...cachedResult,
+        cached: true,
+        cache_age: Math.round((Date.now() - cache.get(variant)!.timestamp) / 1000)
+      });
+    }
+  }
+
+  for (const variant of urlVariants) {
+    const cachedResult = getCachedResult(variant);
+    if (cachedResult && cachedResult.safe === true) {
+      return res.json({
+        ...cachedResult,
+        cached: true,
+        cache_age: Math.round((Date.now() - cache.get(variant)!.timestamp) / 1000)
+      });
+    }
+  }
