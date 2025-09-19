@@ -237,4 +237,34 @@ router.post('/check-url', async (req: Request, res: Response) => {
             matches: [],
             checked_variations: urlVariants.length,
             ssl_verified: sslVerified,
-            recommendation: 'This website appears safe, but always exercise caution online.',
+            recommendation: 'This website appears safe, but always exercise caution online.',
+            cached: false
+          };
+          setCachedResult(urlToCheck, safeResult);
+        }
+      } catch (error: any) {
+        // Handle quota exceeded or API unavailable
+        if (error.response && error.response.status === 429) {
+          return res.status(503).json({
+            error: 'Google Safe Browsing quota exceeded',
+            details: 'The service is temporarily unavailable due to quota limits. Please try again later.'
+          });
+        }
+        if (error.response && error.response.status >= 500) {
+          return res.status(503).json({
+            error: 'Google Safe Browsing API unavailable',
+            details: 'The service is temporarily unavailable. Please try again later.'
+          });
+        }
+        // Continue to next variant
+      }
+    }
+  }
+  // If all variants are safe, return the first safe result
+  const firstSafe = getCachedResult(urlVariants[0]);
+  if (firstSafe) {
+    return res.json(firstSafe);
+  }
+  // If we reach here, something went wrong
+  return res.status(500).json({
+    error: 'Unknown error',
