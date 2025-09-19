@@ -237,4 +237,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             cached: false
           };
           setCachedResult(urlToCheck, threatResult);
-          return res.json(threatResult);
+          return res.json(threatResult);
+        } else {
+          // Check SSL if HTTPS
+          const sslVerified = await checkSSL(urlToCheck);
+          // Cache safe result for this variant
+          const safeResult = {
+            url: urlToCheck,
+            safe: true,
+            threat_type: 'NONE',
+            platform_type: 'ANY_PLATFORM',
+            threat_description: 'No known threats detected',
+            confidence: 'HIGH',
+            matches: [],
+            checked_variations: urlVariants.length,
+            ssl_verified: sslVerified,
+            recommendation: 'This website appears safe, but always exercise caution online.',
+            cached: false
+          };
+          setCachedResult(urlToCheck, safeResult);
+        }
+      } catch (error: any) {
+        // Handle quota exceeded or API unavailable
+        if (error.response && error.response.status === 429) {
+          return res.status(503).json({
+            error: 'Google Safe Browsing quota exceeded',
+            details: 'The service is temporarily unavailable due to quota limits. Please try again later.'
+          });
+        }
+        if (error.response && error.response.status >= 500) {
+          return res.status(503).json({
+            error: 'Google Safe Browsing API unavailable',
