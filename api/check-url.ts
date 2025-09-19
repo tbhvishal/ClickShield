@@ -17,4 +17,24 @@ const getCachedResult = (url: string): any | null => {
   }
   return null;
 };
-
+
+const setCachedResult = (url: string, data: any): void => {
+  cache.set(url, { data, timestamp: Date.now() });
+};
+
+// Helper to follow redirects and return the final URL
+const getFinalRedirectUrl = async (url: string): Promise<string> => {
+  try {
+    const response = await axios.get(url, {
+      maxRedirects: 5,
+      timeout: 7000,
+      validateStatus: () => true // Accept all status codes
+    });
+    return response.request?.res?.responseUrl || url;
+  } catch {
+    return url;
+  }
+};
+
+// Helper to check SSL certificate validity for HTTPS URLs
+const checkSSL = async (url: string): Promise<boolean> => {
