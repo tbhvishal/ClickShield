@@ -297,4 +297,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
           </motion.button>
 
           {isLoading && (
-            <motion.div
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center mt-4"
+            >
+              <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full border border-blue-200 dark:border-blue-700">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                <span className="text-sm font-medium text-blue-700 dark:text-blue-300 ml-2">
+                  Analyzing website security...
+                </span>
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
+
+        {/* Decorative */}
+        <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-500 dark:from-blue-500 dark:to-cyan-600 rounded-full opacity-60" />
+        <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-br from-cyan-400 to-teal-500 dark:from-cyan-500 dark:to-teal-600 rounded-full opacity-40" />
+      </div>
