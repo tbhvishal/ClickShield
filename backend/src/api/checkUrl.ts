@@ -267,4 +267,10 @@ router.post('/check-url', async (req: Request, res: Response) => {
   }
   // If we reach here, something went wrong
   return res.status(500).json({
-    error: 'Unknown error',
+    error: 'Unknown error',
+    details: 'Unable to determine URL safety. Please try again.'
+  });
+});
+
+export default router;
+

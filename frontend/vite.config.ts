@@ -17,4 +17,34 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true
         }
       }
-    },
+    },
+    define: {
+      'import.meta.env.VITE_BACKEND_API_URL': JSON.stringify(env.VITE_BACKEND_API_URL || `http://localhost:${env.PORT || 8001}`)
+    },
+    build: {
+
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            'ui-vendor': ['framer-motion', 'lucide-react'],
+            'utils-vendor': ['jspdf']
+          }
+        }
+      },
+      chunkSizeWarningLimit: 1000,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      },
+      sourcemap: false,
+      cssCodeSplit: true
+    },
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'framer-motion', 'lucide-react']
+    }
+  };
+});

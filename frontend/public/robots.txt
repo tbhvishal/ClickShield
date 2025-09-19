@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Block access to sensitive files
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /.git/
+
+# Sitemap
+Sitemap: /sitemap.xml

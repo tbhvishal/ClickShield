@@ -17,4 +17,10 @@
     "docker:dev": "docker-compose up --build",
     "docker:prod": "docker-compose -f docker-compose.yml up --build -d"
   },
-  "devDependencies": {
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
