@@ -157,4 +157,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
           className="space-y-4 sm:space-y-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+        >
+          <div className="space-y-3 sm:space-y-4">
+            <motion.label
+              htmlFor="url"
+              className="block text-center mb-4 sm:mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <div className="inline-flex items-center justify-center space-x-2 sm:space-x-3 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-full border border-blue-200/50 dark:border-blue-700/50 backdrop-blur-sm shadow-sm">
+                <div className="p-1 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full">
+                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                </div>
+                <span className="text-base sm:text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                  Scan Website for Threats
+                </span>
+                <div className="p-1 bg-gradient-to-r from-cyan-500 to-teal-600 rounded-full">
+                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                </div>
+              </div>
