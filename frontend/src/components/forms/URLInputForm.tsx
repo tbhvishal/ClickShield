@@ -217,4 +217,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
               {displayUrl && displayUrl !== url && (
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-sm text-gray-600 dark:text-gray-400 mt-3 flex items-center space-x-2"
+                >
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>Will check: <span className="font-semibold text-blue-600 dark:text-blue-400">{displayUrl}</span></span>
+                </motion.p>
+              )}
+
+              {validationMessage && (
+                <motion.p
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="text-sm text-red-600 dark:text-red-400 mt-3 flex items-center space-x-2"
+                >
+                  <AlertTriangle className="w-4 h-4" />
+                  <span>{validationMessage}</span>
+                </motion.p>
+              )}
+            </motion.div>
+          </div>
+
