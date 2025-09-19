@@ -237,4 +237,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
               )}
             </motion.div>
           </div>
-
+
+          <motion.button
+            onClick={() => handleSubmit({ preventDefault: () => {} } as React.FormEvent)}
+            disabled={isButtonDisabled()}
+            className={`relative max-w-xs sm:max-w-sm lg:max-w-md mx-auto block font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-xl text-white text-sm sm:text-base transition-all duration-500 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 disabled:transform-none disabled:shadow-lg overflow-hidden group ${getButtonColor()}`}
+            whileHover={!isButtonDisabled() ? { scale: 1.02 } : {}}
+            whileTap={!isButtonDisabled() ? { scale: 0.98 } : {}}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+          >
+            {/* Background layers */}
+            <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/5 rounded-xl"></div>
+
+            {/* Shimmer effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1200 ease-out rounded-xl"></div>
+
+            {/* Glow rings */}
+            <div className="absolute inset-0 rounded-xl ring-1 ring-white/20 group-hover:ring-white/40 transition-all duration-500"></div>
+            <div className="absolute inset-0 rounded-xl ring-2 ring-white/10 group-hover:ring-white/30 transition-all duration-500"></div>
