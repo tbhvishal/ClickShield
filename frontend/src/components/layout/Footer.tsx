@@ -37,4 +37,24 @@ const Footer = () => {
                   <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Advanced Security Scanner</p>
                 </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed max-w-md mx-auto lg:mx-0">
+              <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed max-w-md mx-auto lg:mx-0">
+                Real-time phishing detection powered by Google's Safe Browsing API.
+                Protecting users worldwide with cutting-edge security technology.
+              </p>
+            </div>
+
+            {/* Features Section */}
+            <div className="text-center lg:text-left">
+              <h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-6 flex items-center justify-center lg:justify-start space-x-2">
+                <Zap className="w-5 h-5 text-blue-500" />
+                <span>Features</span>
+              </h4>
+              <div className="space-y-3">
+                <div className="flex items-center justify-center lg:justify-start space-x-3 text-sm text-gray-600 dark:text-gray-300">
+                  <Shield className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                  <span>Safe Browsing API</span>
+                </div>
+                <div className="flex items-center justify-center lg:justify-start space-x-3 text-sm text-gray-600 dark:text-gray-300">
+                  <Lock className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                  <span>SSL Validation</span>
+                </div>
