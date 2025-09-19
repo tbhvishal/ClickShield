@@ -177,4 +177,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             platform_type: 'ANY_PLATFORM',
             threat_description: 'Domain is unreachable or does not exist. Treat as suspicious.',
             confidence: 'MEDIUM',
-            matches: [],
+            matches: [],
+            checked_variations: urlVariants.length,
+            ssl_verified: false, // Unreachable domains can't have valid SSL
+            recommendation: 'Do not trust this website. The domain does not resolve.',
+            cached: false,
+            warning: true
+          };
+          setCachedResult(urlToCheck, unreachableResult);
+          return res.json(unreachableResult);
+        }
+      } catch (e) {
+        // If URL parsing fails, skip to next
+        continue;
+      }
+
+      const requestBody = {
+        client: { clientId: 'clickshield', clientVersion: '1.0.0' },
+        threatInfo: {
+          threatTypes: [
+            'MALWARE',
+            'SOCIAL_ENGINEERING',
