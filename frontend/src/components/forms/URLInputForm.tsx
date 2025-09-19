@@ -317,4 +317,9 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
         {/* Decorative */}
         <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-500 dark:from-blue-500 dark:to-cyan-600 rounded-full opacity-60" />
         <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-br from-cyan-400 to-teal-500 dark:from-cyan-500 dark:to-teal-600 rounded-full opacity-40" />
-      </div>
+      </div>
+    </motion.div>
+  )
+}
+
+export default URLInputForm
