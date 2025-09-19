@@ -77,4 +77,24 @@ function App() {
         throw new Error('VITE_BACKEND_API_URL is not set in your environment. Please define it in your .env file.');
       }
       const response = await fetch(`${apiBaseUrl}/api/check-url`, {
-        method: 'POST',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url }),
+      })
+
+      const data = await response.json()
+
+      console.log('Google Safe Browsing API Response:', data)
+      console.log('Response Details:')
+      console.log('- URL:', data.url)
+      console.log('- Safe:', data.safe)
+      console.log('- Threat Type:', data.threat_type)
+      console.log('- Platform Type:', data.platform_type)
+      console.log('- Matches:', data.matches)
+      console.log('- Number of matches:', data.matches?.length || 0)
+
+      if (!response.ok) {
+        throw new Error(data.details || data.error || 'Failed to check URL')
+      }
