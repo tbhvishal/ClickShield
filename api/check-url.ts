@@ -137,4 +137,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Check cache for threats first
   for (const variant of urlVariants) {
     const cachedResult = getCachedResult(variant);
-    if (cachedResult && cachedResult.safe === false) {
+    if (cachedResult && cachedResult.safe === false) {
+      return res.json({
+        ...cachedResult,
+        cached: true,
+        cache_age: Math.round((Date.now() - cache.get(variant)!.timestamp) / 1000)
+      });
+    }
+  }
+
+  // If all cached results are safe, return the first one
+  for (const variant of urlVariants) {
+    const cachedResult = getCachedResult(variant);
+    if (cachedResult && cachedResult.safe === true) {
+      return res.json({
+        ...cachedResult,
+        cached: true,
+        cache_age: Math.round((Date.now() - cache.get(variant)!.timestamp) / 1000)
+      });
+    }
+  }
+
