@@ -57,4 +57,34 @@
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-
+
+    <!-- Performance & Caching -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000" />
+
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "/#webapp",
+          "name": "ClickShield Website Security Scanner",
+          "description": "Advanced website security scanner that detects phishing attacks, malware, and malicious content using Google Safe Browsing API with real-time analysis.",
+          "url": "/",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Web Browser",
+          "browserRequirements": "Modern web browser with JavaScript enabled",
+          "author": {
+            "@type": "Person",
+            "@id": "https://github.com/tbhvishal",
+            "name": "Vishal Sharma",
+            "url": "https://github.com/tbhvishal",
+            "sameAs": [
+              "https://github.com/tbhvishal"
+            ]
+          },
