@@ -97,4 +97,24 @@ function App() {
 
       if (!response.ok) {
         throw new Error(data.details || data.error || 'Failed to check URL')
-      }
+      }
+
+      // Use the real data from Google Safe Browsing API
+      const result: PredictionResult = {
+        url: data.url,
+        safe: data.safe,
+        threat_type: data.threat_type,
+        platform_type: data.platform_type,
+        matches: data.matches || [],
+        threat_description: data.threat_description,
+        confidence: data.confidence,
+        checked_variations: data.checked_variations,
+        recommendation: data.recommendation,
+        cached: data.cached,
+        cache_age: data.cache_age,
+        ssl_verified: data.ssl_verified
+      }
+
+      setCurrentResult(result)
+      setHistory(prev => [result, ...prev.slice(0, 4)]) // Keep last 5 results
+
