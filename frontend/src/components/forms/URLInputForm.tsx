@@ -17,4 +17,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
       const trimmedUrl = url.trim()
 
       if (!trimmedUrl) {
-        setDisplayUrl('')
+        setDisplayUrl('')
+        setValidationMessage('')
+        return
+      }
+
+      if (!trimmedUrl.includes('://') && trimmedUrl.includes('.')) {
+        const completedUrl = `https://${trimmedUrl}`
+        setDisplayUrl(completedUrl)
+        setValidationMessage('')
+      } else if (trimmedUrl && !trimmedUrl.includes('.')) {
+        setDisplayUrl(trimmedUrl)
+        setValidationMessage('Please include a domain extension (e.g., .com, .org)')
+      } else if (trimmedUrl && trimmedUrl.includes(' ') || trimmedUrl.includes('<') || trimmedUrl.includes('>')) {
+        // Contains invalid characters
+        setDisplayUrl(trimmedUrl)
+        setValidationMessage('URL contains invalid characters')
+      } else if (trimmedUrl && (trimmedUrl.includes('..') || trimmedUrl.startsWith('.') || trimmedUrl.endsWith('.'))) {
+        // Invalid domain structure
+        setDisplayUrl(trimmedUrl)
+        setValidationMessage('Invalid domain structure')
+      } else {
