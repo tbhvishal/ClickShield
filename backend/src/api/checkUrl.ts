@@ -207,4 +207,34 @@ router.post('/check-url', async (req: Request, res: Response) => {
             SOCIAL_ENGINEERING: 'This site is identified as a phishing attempt or social engineering attack',
             UNWANTED_SOFTWARE: 'This site may install unwanted software or browser extensions',
             POTENTIALLY_HARMFUL_APPLICATION: 'This site hosts potentially harmful applications'
-          };
+          };
+          const threatResult = {
+            url: urlToCheck,
+            safe: false,
+            threat_type: match.threatType,
+            platform_type: match.platformType,
+            threat_description: threatDetails[match.threatType as keyof typeof threatDetails] || 'Unknown threat detected',
+            confidence: 'HIGH',
+            matches: data.matches,
+            checked_variations: urlVariants.length,
+            ssl_verified: await checkSSL(urlToCheck),
+            recommendation: 'Do not visit this website. It has been flagged as dangerous.',
+            cached: false
+          };
+          setCachedResult(urlToCheck, threatResult);
+          return res.json(threatResult);
+        } else {
+          // Check SSL if HTTPS
+          const sslVerified = await checkSSL(urlToCheck);
+          // Cache safe result for this variant
+          const safeResult = {
+            url: urlToCheck,
+            safe: true,
+            threat_type: 'NONE',
+            platform_type: 'ANY_PLATFORM',
+            threat_description: 'No known threats detected',
+            confidence: 'HIGH',
+            matches: [],
+            checked_variations: urlVariants.length,
+            ssl_verified: sslVerified,
+            recommendation: 'This website appears safe, but always exercise caution online.',
