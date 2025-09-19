@@ -137,4 +137,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
     if (validationMessage || (!isValidUrl(displayUrl) && url.trim())) return 'bg-gradient-to-r from-red-500 via-pink-500 to-orange-600 hover:from-red-600 hover:via-pink-600 hover:to-orange-700 shadow-red-500/40'
     return 'bg-gradient-to-r from-emerald-500 via-green-500 to-teal-600 hover:from-emerald-600 hover:via-green-600 hover:to-teal-700 shadow-emerald-500/40'
   }
-
+
+  const isButtonDisabled = () => {
+    return isLoading || !url.trim() || !isValidUrl(displayUrl)
+  }
+
+  return (
+    <motion.div
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="relative"
+    >
+      {/* Glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-teal-500/10 dark:from-blue-500/15 dark:via-cyan-500/15 dark:to-teal-500/15 rounded-2xl blur-xl max-w-4xl mx-auto" />
+
+      <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/50 p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
+        <motion.div
+          className="space-y-4 sm:space-y-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
