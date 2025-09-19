@@ -37,4 +37,24 @@ function App() {
 
   // Optimized background elements for better performance
   const backgroundElements = useMemo(() => [
-    {
+    {
+      id: 1,
+      size: 'w-80 h-80',
+      colors: 'bg-gradient-to-r from-blue-300/6 to-blue-400/6 dark:from-blue-500/8 dark:to-blue-600/8',
+      position: 'top-20 left-10',
+      duration: 25, // Optimized for better performance
+      delay: 0,
+      blur: 'blur-2xl'
+    },
+    {
+      id: 2,
+      size: 'w-72 h-72',
+      colors: 'bg-gradient-to-r from-blue-300/5 to-blue-400/5 dark:from-blue-500/7 dark:to-blue-600/7',
+      position: 'bottom-20 right-10',
+      duration: 28, // Optimized for better performance
+      delay: 2,
+      blur: 'blur-2xl'
+    },
+    {
+      id: 3,
+      size: 'w-64 h-64',
