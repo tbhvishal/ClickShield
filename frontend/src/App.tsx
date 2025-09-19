@@ -17,4 +17,24 @@ import LoadingFallback from './components/LoadingFallback'
 export interface PredictionResult {
   url: string
   safe: boolean
-  threat_type: string
+  threat_type: string
+  platform_type: string
+  matches: any[]
+  threat_description?: string
+  confidence?: string
+  checked_variations?: number
+  recommendation?: string
+  cached?: boolean
+  cache_age?: number
+  ssl_verified?: boolean
+}
+
+function App() {
+  const [currentResult, setCurrentResult] = useState<PredictionResult | null>(null)
+  const [history, setHistory] = useState<PredictionResult[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Optimized background elements for better performance
+  const backgroundElements = useMemo(() => [
+    {
