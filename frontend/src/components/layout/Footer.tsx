@@ -17,4 +17,24 @@ const Footer = () => {
       </div>
 
       <div className="relative container mx-auto px-6 py-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
+          {/* Main Footer Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 mb-8">
+            {/* Brand Section */}
+            <div className="lg:col-span-2 text-center lg:text-left">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start sm:space-x-4 space-y-3 sm:space-y-0 mb-6">
+                <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-xl flex-shrink-0">
+                  <img 
+                    src={logo} 
+                    alt="ClickShield Logo" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 bg-clip-text text-transparent">
+                    ClickShield
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Advanced Security Scanner</p>
+                </div>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed max-w-md mx-auto lg:mx-0">
