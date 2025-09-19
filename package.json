@@ -1,0 +1,20 @@
+{
+  "name": "clickshield",
+  "version": "1.0.0",
+  "description": "Full-stack phishing website detection application",
+  "scripts": {
+    "dev": "npm run build && npm run start",
+    "build": "cd frontend && npm run build && cd ../backend && npm run build",
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm run preview\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run preview",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "clean": "cd backend && rm -rf node_modules dist && cd ../frontend && rm -rf node_modules dist",
+    "docker:dev": "docker-compose up --build",
+    "docker:prod": "docker-compose -f docker-compose.yml up --build -d"
+  },
+  "devDependencies": {
