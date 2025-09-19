@@ -147,4 +147,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // If all cached results are safe, return the first one
-  for (const variant of urlVariants) {
+  for (const variant of urlVariants) {
+    const cachedResult = getCachedResult(variant);
+    if (cachedResult && cachedResult.safe === true) {
+      return res.json({
+        ...cachedResult,
+        cached: true,
+        cache_age: Math.round((Date.now() - cache.get(variant)!.timestamp) / 1000)
+      });
+    }
+  }
+
+  // Check all protocol variants with Safe Browsing, including following redirects
+  for (const variant of urlVariants) {
+    // Follow redirects to get the final URL
+    const finalUrl = await getFinalRedirectUrl(variant);
+    const urlsToCheck = finalUrl !== variant ? [variant, finalUrl] : [variant];
+
+    for (const urlToCheck of urlsToCheck) {
+      // Check if the domain is reachable before Safe Browsing
+      try {
+        const parsed = new URL(urlToCheck);
+        const reachable = await isDomainReachable(parsed.hostname);
+        if (!reachable) {
+          const unreachableResult = {
+            url: urlToCheck,
+            safe: false,
+            threat_type: 'UNREACHABLE_DOMAIN',
+            platform_type: 'ANY_PLATFORM',
+            threat_description: 'Domain is unreachable or does not exist. Treat as suspicious.',
+            confidence: 'MEDIUM',
+            matches: [],
