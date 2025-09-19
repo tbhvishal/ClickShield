@@ -217,4 +217,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (data.matches && data.matches.length > 0) {
           const match = data.matches[0];
           const threatDetails = {
-            MALWARE: 'This site contains malicious software that could harm your device',
+            MALWARE: 'This site contains malicious software that could harm your device',
+            SOCIAL_ENGINEERING: 'This site is identified as a phishing attempt or social engineering attack',
+            UNWANTED_SOFTWARE: 'This site may install unwanted software or browser extensions',
+            POTENTIALLY_HARMFUL_APPLICATION: 'This site hosts potentially harmful applications'
+          };
+
+          const threatResult = {
+            url: urlToCheck,
+            safe: false,
+            threat_type: match.threatType,
+            platform_type: match.platformType,
+            threat_description: threatDetails[match.threatType as keyof typeof threatDetails] || 'Unknown threat detected',
+            confidence: 'HIGH',
+            matches: data.matches,
+            checked_variations: urlVariants.length,
+            ssl_verified: await checkSSL(urlToCheck),
+            recommendation: 'Do not visit this website. It has been flagged as dangerous.',
+            cached: false
+          };
+          setCachedResult(urlToCheck, threatResult);
+          return res.json(threatResult);
