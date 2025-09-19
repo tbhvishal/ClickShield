@@ -77,4 +77,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       dns.lookup(hostname, (err) => {
         resolve(!err);
       });
-    });
+    });
+  };
+
+  const { url } = req.body;
+
+  if (!url || typeof url !== 'string') {
+    return res.status(400).json({
+      error: 'Invalid or missing URL.',
+      details: 'Please provide a valid URL string.'
+    });
+  }
+
+  const trimmedUrl = url.trim();
+
+  // Strict input validation: reject URLs with spaces, control chars, or invalid chars
+  if (!trimmedUrl || /[\s\x00-\x1F\x7F"'<>`]/.test(trimmedUrl)) {
+    return res.status(400).json({
+      error: 'Invalid URL provided.',
+      details: 'URL cannot be empty or contain spaces, quotes, or control characters.'
+    });
+  }
