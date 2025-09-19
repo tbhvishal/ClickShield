@@ -157,4 +157,24 @@ function App() {
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [])
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/40 to-blue-50/60 dark:from-slate-900 dark:via-gray-900 dark:to-zinc-900 transition-all duration-500 relative overflow-hidden" role="application" aria-label="ClickShield Phishing Detection Application">
+      {/* Progress Bar at top of page */}
+      {isLoading && (
+        <div className="fixed top-0 left-0 w-full z-50" role="progressbar" aria-label="URL analysis in progress" aria-valuetext="Analyzing URL...">
+          <div className="h-1 bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500 animate-pulse" style={{ width: '100%' }} />
+        </div>
+      )}
+      {/* Premium background pattern */}
+      <div className="absolute inset-0 opacity-4 dark:opacity-3" aria-hidden="true">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.15)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.08)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+      </div>
+
+      {/* Optimized background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        {backgroundElements.map((element) => (
+          <div
+            key={element.id}
+            className={`absolute ${element.position} ${element.size} ${element.colors} rounded-full ${element.blur}`}
