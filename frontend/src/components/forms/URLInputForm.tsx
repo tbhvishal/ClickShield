@@ -177,4 +177,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
                 <div className="p-1 bg-gradient-to-r from-cyan-500 to-teal-600 rounded-full">
                   <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
-              </div>
+              </div>
+            </motion.label>
+
+            <motion.div
+              className="relative max-w-2xl mx-auto"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <div className="relative">
+                <input
+                  type="text"
+                  id="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !isButtonDisabled()) {
+                      handleSubmit({ preventDefault: () => {} } as React.FormEvent)
+                    }
+                  }}
+                  placeholder="Enter website address to scan (e.g. https://example.com)"
