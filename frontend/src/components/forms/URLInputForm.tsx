@@ -57,4 +57,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
   const handlePaste = async () => {
     try {
       const text = await navigator.clipboard.readText()
-      setUrl(text)
+      setUrl(text)
+    } catch (err) {
+      // Failed to paste
+    }
+  }
+
+  const isValidUrl = (string: string) => {
+    if (!string.trim()) return false
+
+    try {
+      const urlToTest = string.includes('://') ? string : `https://${string}`
+      const url = new URL(urlToTest)
+
+      if (!url.hostname || url.hostname.length < 4) {
+        return false
+      }
+
+      if (!url.hostname.includes('.')) {
+        return false // No TLD
+      }
+
