@@ -37,4 +37,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
         // Invalid domain structure
         setDisplayUrl(trimmedUrl)
         setValidationMessage('Invalid domain structure')
-      } else {
+      } else {
+        setDisplayUrl(trimmedUrl)
+        setValidationMessage('')
+      }
+    }, 300)
+
+    return () => clearTimeout(timeoutId)
+  }, [url])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const urlToSubmit = displayUrl.trim()
+    if (urlToSubmit) {
+      onSubmit(urlToSubmit)
+    }
+  }
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText()
+      setUrl(text)
