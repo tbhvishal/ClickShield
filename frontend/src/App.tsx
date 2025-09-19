@@ -177,4 +177,24 @@ function App() {
         {backgroundElements.map((element) => (
           <div
             key={element.id}
-            className={`absolute ${element.position} ${element.size} ${element.colors} rounded-full ${element.blur}`}
+            className={`absolute ${element.position} ${element.size} ${element.colors} rounded-full ${element.blur}`}
+          />
+        ))}
+      </div>
+
+      {/* Header */}
+      <Suspense fallback={<div className="animate-pulse h-16 bg-gray-200 dark:bg-gray-700"></div>}>
+        <Header />
+      </Suspense>
+
+      <main className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-7xl min-h-screen" role="main">
+        <section className="relative flex flex-col justify-center min-h-[65vh] sm:min-h-[70vh]" aria-labelledby="main-heading">
+          <header className="relative flex flex-col justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="text-center mb-6 sm:mb-8"
+            >
+              {/* Logo Section */}
+              <motion.div
