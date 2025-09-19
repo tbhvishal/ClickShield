@@ -27,4 +27,34 @@ const getFinalRedirectUrl = async (url: string): Promise<string> => {
   try {
     const response = await axios.get(url, {
       maxRedirects: 5,
-      timeout: 7000,
+      timeout: 7000,
+      validateStatus: () => true // Accept all status codes
+    });
+    return response.request?.res?.responseUrl || url;
+  } catch {
+    return url;
+  }
+};
+
+// Helper to check SSL certificate validity for HTTPS URLs
+const checkSSL = async (url: string): Promise<boolean> => {
+  try {
+    const parsedUrl = new URL(url);
+    if (parsedUrl.protocol !== 'https:') return false;
+    return new Promise((resolve) => {
+      const req = https.request({
+        hostname: parsedUrl.hostname,
+        port: parsedUrl.port || 443,
+        path: '/',
+        method: 'HEAD',
+        timeout: 5000,
+        rejectUnauthorized: true // This will reject if SSL is invalid
+      }, (res) => {
+        res.on('data', () => {}); // Consume data
+        res.on('end', () => resolve(true));
+      });
+      req.on('error', () => resolve(false));
+      req.on('timeout', () => {
+        req.destroy();
+        resolve(false);
+      });
