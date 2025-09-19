@@ -217,4 +217,24 @@ function App() {
                       />
                     </div>
                     <motion.div
-                      animate={{ rotate: 360 }}
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                      className="absolute -inset-2 bg-gradient-to-r from-blue-400 to-blue-500 dark:from-blue-500 dark:to-blue-600 rounded-2xl opacity-20 blur-sm"
+                    />
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
+                className="mb-3 sm:mb-4"
+              >
+                <h1 id="main-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent mb-2 sm:mb-3 leading-tight tracking-tight drop-shadow-lg">
+                  ClickShield
+                </h1>
+                <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-blue-500 to-blue-500 mx-auto rounded-full"></div>
+              </motion.div>
+
+              <motion.p
