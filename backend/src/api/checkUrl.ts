@@ -177,4 +177,34 @@ router.post('/check-url', async (req: Request, res: Response) => {
           return res.json(unreachableResult);
         }
       } catch (e) {
-        // If URL parsing fails, skip to next
+        // If URL parsing fails, skip to next
+        continue;
+      }
+      const requestBody: GoogleSafeBrowsingRequest = {
+        client: { clientId: 'clickshield', clientVersion: '1.0.0' },
+        threatInfo: {
+          threatTypes: [
+            'MALWARE',
+            'SOCIAL_ENGINEERING',
+            'UNWANTED_SOFTWARE',
+            'POTENTIALLY_HARMFUL_APPLICATION'
+          ],
+          platformTypes: ['ANY_PLATFORM'],
+          threatEntryTypes: ['URL'],
+          threatEntries: [{ url: urlToCheck }]
+        }
+      };
+      try {
+        const { data } = await axios.post<GoogleSafeBrowsingResponse>(
+          `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`,
+          requestBody,
+          { timeout: 10000 }
+        );
+        if (data.matches && data.matches.length > 0) {
+          const match = data.matches[0];
+          const threatDetails = {
+            MALWARE: 'This site contains malicious software that could harm your device',
+            SOCIAL_ENGINEERING: 'This site is identified as a phishing attempt or social engineering attack',
+            UNWANTED_SOFTWARE: 'This site may install unwanted software or browser extensions',
+            POTENTIALLY_HARMFUL_APPLICATION: 'This site hosts potentially harmful applications'
+          };
