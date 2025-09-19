@@ -87,4 +87,34 @@ router.post('/check-url', async (req: Request, res: Response) => {
       details: 'Please provide a valid URL string.'
     });
   }
-  const trimmedUrl = url.trim();
+  const trimmedUrl = url.trim();
+  
+  if (!trimmedUrl || /[\s\x00-\x1F\x7F"'<>`]/.test(trimmedUrl)) {
+    return res.status(400).json({
+      error: 'Invalid URL provided.',
+      details: 'URL cannot be empty or contain spaces, quotes, or control characters.'
+    });
+  }
+ 
+  let urlVariants: string[] = [];
+  if (trimmedUrl.includes('://')) {
+    urlVariants = [trimmedUrl];
+  } else {
+    urlVariants = [`https://${trimmedUrl}`, `http://${trimmedUrl}`];
+  }
+
+  urlVariants = urlVariants.filter(variant => {
+    try {
+      const parsedUrl = new URL(variant);
+      if (!parsedUrl.hostname || parsedUrl.hostname.length < 4) return false;
+      if (!parsedUrl.hostname.includes('.')) return false;
+      return true;
+    } catch {
+      return false;
+    }
+  });
+  if (urlVariants.length === 0) {
+    return res.status(400).json({
+      error: 'Invalid URL format.',
+      details: 'Please provide a properly formatted URL.'
+    });
