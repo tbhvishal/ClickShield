@@ -197,4 +197,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         threatInfo: {
           threatTypes: [
             'MALWARE',
-            'SOCIAL_ENGINEERING',
+            'SOCIAL_ENGINEERING',
+            'UNWANTED_SOFTWARE',
+            'POTENTIALLY_HARMFUL_APPLICATION'
+          ],
+          platformTypes: ['ANY_PLATFORM'],
+          threatEntryTypes: ['URL'],
+          threatEntries: [{ url: urlToCheck }]
+        }
+      };
+
+      try {
+        const { data } = await axios.post(
+          `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`,
+          requestBody,
+          { timeout: 10000 }
+        );
+
+        if (data.matches && data.matches.length > 0) {
+          const match = data.matches[0];
+          const threatDetails = {
+            MALWARE: 'This site contains malicious software that could harm your device',
