@@ -277,4 +277,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
             <div className="relative flex items-center justify-center space-x-2 z-10">
               <div className="relative p-1 rounded-full bg-white/10 group-hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/20 group-hover:border-white/30 shadow-inner group-hover:shadow-white/20">
                 <div className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:drop-shadow-2xl">
-                  {getButtonIcon()}
+                  {getButtonIcon()}
+                </div>
+                {/* Icon ring effect */}
+                <div className="absolute inset-0 rounded-full ring-1 ring-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+              </div>
+              <span className="tracking-wide drop-shadow-sm font-semibold group-hover:tracking-wider transition-all duration-300">{getButtonText()}</span>
+            </div>
+
+            {/* Corner highlights */}
+            <div className="absolute top-1 left-1 w-2 h-2 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm"></div>
+            <div className="absolute top-1 right-1 w-2 h-2 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm"></div>
+            <div className="absolute bottom-1 left-1 w-2 h-2 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm"></div>
+            <div className="absolute bottom-1 right-1 w-2 h-2 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm"></div>
+
+            {/* Border accent */}
+            <div className="absolute inset-0 rounded-xl border border-white/10 group-hover:border-white/20 transition-all duration-500"></div>
+          </motion.button>
+
+          {isLoading && (
+            <motion.div
