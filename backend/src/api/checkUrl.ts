@@ -147,4 +147,34 @@ router.post('/check-url', async (req: Request, res: Response) => {
         cache_age: Math.round((Date.now() - cache.get(variant)!.timestamp) / 1000)
       });
     }
-  }
+  }
+  
+  for (const variant of urlVariants) {
+    // Follow redirects to get the final URL
+    const finalUrl = await getFinalRedirectUrl(variant);
+    const urlsToCheck = finalUrl !== variant ? [variant, finalUrl] : [variant];
+    for (const urlToCheck of urlsToCheck) {
+      // Check if the domain is reachable before Safe Browsing
+      try {
+        const parsed = new URL(urlToCheck);
+        const reachable = await isDomainReachable(parsed.hostname);
+        if (!reachable) {
+          const unreachableResult = {
+            url: urlToCheck,
+            safe: false,
+            threat_type: 'UNREACHABLE_DOMAIN',
+            platform_type: 'ANY_PLATFORM',
+            threat_description: 'Domain is unreachable or does not exist. Treat as suspicious.',
+            confidence: 'MEDIUM',
+            matches: [],
+            checked_variations: urlVariants.length,
+            ssl_verified: false, // Unreachable domains can't have valid SSL
+            recommendation: 'Do not trust this website. The domain does not resolve.',
+            cached: false,
+            warning: true
+          };
+          setCachedResult(urlToCheck, unreachableResult);
+          return res.json(unreachableResult);
+        }
+      } catch (e) {
+        // If URL parsing fails, skip to next
