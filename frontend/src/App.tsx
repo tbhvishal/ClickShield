@@ -137,4 +137,24 @@ function App() {
             const rect = resultElement.getBoundingClientRect();
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const targetY = rect.top + scrollTop - 100; // Add some offset from top
-
+
+            window.scrollTo({
+              top: targetY,
+              behavior: 'smooth'
+            });
+          }, 300);
+
+          // Remove highlight after animation
+          setTimeout(() => {
+            resultElement.classList.remove('scroll-highlight');
+          }, 2000);
+        }
+      }, 800); // Increased delay to ensure component is fully rendered
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
+      setError(errorMessage)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
