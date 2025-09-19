@@ -57,4 +57,24 @@ function App() {
     },
     {
       id: 3,
-      size: 'w-64 h-64',
+      size: 'w-64 h-64',
+      colors: 'bg-gradient-to-r from-blue-300/4 to-blue-400/4 dark:from-blue-500/6 dark:to-blue-600/6',
+      position: 'top-1/2 left-1/2',
+      duration: 32, // Optimized for better performance
+      delay: 4,
+      blur: 'blur-xl'
+    }
+  ], [])
+
+  const handlePrediction = useCallback(async (url: string) => {
+    setIsLoading(true)
+    setError(null)
+    setCurrentResult(null)
+
+    try {
+      const apiBaseUrl = import.meta.env.VITE_BACKEND_API_URL;
+      if (!apiBaseUrl) {
+        throw new Error('VITE_BACKEND_API_URL is not set in your environment. Please define it in your .env file.');
+      }
+      const response = await fetch(`${apiBaseUrl}/api/check-url`, {
+        method: 'POST',
