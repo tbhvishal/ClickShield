@@ -57,4 +57,34 @@ const checkSSL = async (url: string): Promise<boolean> => {
         res.on('end', () => resolve(true));
       });
       req.on('error', () => resolve(false));
-      req.on('timeout', () => {
+      req.on('timeout', () => {
+        req.destroy();
+        resolve(false);
+      });
+      req.end();
+    });
+  } catch {
+    return false;
+  }
+};
+
+router.post('/check-url', async (req: Request, res: Response) => {
+ 
+  const isDomainReachable = async (hostname: string): Promise<boolean> => {
+    try {
+      const dns = await import('dns').then(mod => mod.promises);
+      await dns.lookup(hostname);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+  console.log('--- Incoming /check-url request ---');
+  const { url } = req.body;
+  if (!url || typeof url !== 'string') {
+    return res.status(400).json({
+      error: 'Invalid or missing URL.',
+      details: 'Please provide a valid URL string.'
+    });
+  }
+  const trimmedUrl = url.trim();
