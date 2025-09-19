@@ -197,4 +197,24 @@ function App() {
               className="text-center mb-6 sm:mb-8"
             >
               {/* Logo Section */}
-              <motion.div
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.05, duration: 0.3, ease: "easeOut" }}
+                className="mb-3 sm:mb-4"
+              >
+                <div className="flex justify-center mb-3 sm:mb-4">
+                  <motion.div
+                    whileHover={{ scale: 1.03, rotate: 3 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative"
+                  >
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 rounded-2xl flex items-center justify-center shadow-xl border-4 border-white/20 dark:border-gray-700/50 backdrop-blur-sm">
+                      <img
+                        src={logo}
+                        alt="ClickShield Logo"
+                        className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-xl"
+                      />
+                    </div>
+                    <motion.div
+                      animate={{ rotate: 360 }}
