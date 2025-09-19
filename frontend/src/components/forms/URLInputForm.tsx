@@ -197,4 +197,24 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
                       handleSubmit({ preventDefault: () => {} } as React.FormEvent)
                     }
                   }}
-                  placeholder="Enter website address to scan (e.g. https://example.com)"
+                  placeholder="Enter website address to scan (e.g. https://example.com)"
+                  className="w-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5 pr-16 sm:pr-20 text-sm sm:text-base lg:text-lg text-center border-2 border-gray-200/30 dark:border-gray-600/30 rounded-full focus:border-blue-400 focus:ring-4 focus:ring-blue-400/20 dark:bg-gradient-to-r dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-md shadow-2xl hover:shadow-3xl focus:shadow-3xl focus:outline-none transition-all duration-500 bg-white/95 dark:text-white dark:placeholder-gray-400 placeholder:text-gray-500 dark:placeholder:text-gray-500"
+                  disabled={isLoading}
+                  autoComplete="off"
+                  spellCheck="false"
+                  required
+                />
+                <motion.button
+                  onClick={handlePaste}
+                  className="absolute right-3 sm:right-4 lg:right-6 top-1/2 transform -translate-y-1/2 p-2 sm:p-3 bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
+                  disabled={isLoading}
+                  title="Paste from clipboard"
+                >
+                  <Clipboard className="w-4 h-4 sm:w-5 sm:h-5" />
+                </motion.button>
+              </div>
+
+              {displayUrl && displayUrl !== url && (
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
