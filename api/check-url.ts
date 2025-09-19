@@ -87,4 +87,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: 'Invalid or missing URL.',
       details: 'Please provide a valid URL string.'
     });
-  }
+  }
+
+  const trimmedUrl = url.trim();
+
+  // Strict input validation: reject URLs with spaces, control chars, or invalid chars
+  if (!trimmedUrl || /[\s\x00-\x1F\x7F"'<>`]/.test(trimmedUrl)) {
+    return res.status(400).json({
+      error: 'Invalid URL provided.',
+      details: 'URL cannot be empty or contain spaces, quotes, or control characters.'
+    });
+  }
+
+  // Build protocol variants
+  let urlVariants: string[] = [];
+  if (trimmedUrl.includes('://')) {
+    urlVariants = [trimmedUrl];
+  } else {
+    urlVariants = [`https://${trimmedUrl}`, `http://${trimmedUrl}`];
+  }
+
+  // Validate variants
+  urlVariants = urlVariants.filter(variant => {
+    try {
+      const parsedUrl = new URL(variant);
+      if (!parsedUrl.hostname || parsedUrl.hostname.length < 4) return false;
+      if (!parsedUrl.hostname.includes('.')) return false;
+      return true;
+    } catch {
+      return false;
+    }
+  });
