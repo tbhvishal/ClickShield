@@ -117,4 +117,24 @@ function App() {
 
       setCurrentResult(result)
       setHistory(prev => [result, ...prev.slice(0, 4)]) // Keep last 5 results
+
+      // Auto-scroll to results after a short delay with improved reliability
+      setTimeout(() => {
+        const resultElement = document.querySelector('[data-result-section]');
+        if (resultElement) {
+          // Add a temporary highlight class for visual feedback
+          resultElement.classList.add('scroll-highlight');
+
+          // Use multiple scroll methods for better compatibility
+          resultElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
+          });
+
+          // Fallback scroll method
+          setTimeout(() => {
+            const rect = resultElement.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const targetY = rect.top + scrollTop - 100; // Add some offset from top
 
