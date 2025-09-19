@@ -97,4 +97,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: 'Invalid URL provided.',
       details: 'URL cannot be empty or contain spaces, quotes, or control characters.'
     });
-  }
+  }
+
+  // Build protocol variants
+  let urlVariants: string[] = [];
+  if (trimmedUrl.includes('://')) {
+    urlVariants = [trimmedUrl];
+  } else {
+    urlVariants = [`https://${trimmedUrl}`, `http://${trimmedUrl}`];
+  }
+
+  // Validate variants
+  urlVariants = urlVariants.filter(variant => {
+    try {
+      const parsedUrl = new URL(variant);
+      if (!parsedUrl.hostname || parsedUrl.hostname.length < 4) return false;
+      if (!parsedUrl.hostname.includes('.')) return false;
+      return true;
+    } catch {
+      return false;
+    }
+  });
