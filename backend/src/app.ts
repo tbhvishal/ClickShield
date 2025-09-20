@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import checkUrlRouter from './api/checkUrl';
+import checkUrlRouter from './api/checkUrl.js';
 
 const app = express();
 app.use(cors());

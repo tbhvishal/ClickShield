@@ -3,7 +3,7 @@ import { Router } from 'express';
 import axios from 'axios';
 import https from 'https';
 import type { Request, Response } from 'express';
-import type { GoogleSafeBrowsingRequest, GoogleSafeBrowsingResponse } from '../types/googleSafeBrowsing';
+import type { GoogleSafeBrowsingRequest, GoogleSafeBrowsingResponse } from '../types/googleSafeBrowsing.js';
 
 const router = Router();
 
