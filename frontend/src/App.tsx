@@ -43,8 +43,6 @@ function App() {
       size: 'w-80 h-80',
       colors: 'bg-gradient-to-r from-blue-300/6 to-blue-400/6 dark:from-blue-500/8 dark:to-blue-600/8',
       position: 'top-20 left-10',
-      duration: 25, // Optimized for better performance
-      delay: 0,
       blur: 'blur-2xl'
     },
     {
@@ -52,8 +50,6 @@ function App() {
       size: 'w-72 h-72',
       colors: 'bg-gradient-to-r from-blue-300/5 to-blue-400/5 dark:from-blue-500/7 dark:to-blue-600/7',
       position: 'bottom-20 right-10',
-      duration: 28, // Optimized for better performance
-      delay: 2,
       blur: 'blur-2xl'
     },
     {
@@ -61,8 +57,6 @@ function App() {
       size: 'w-64 h-64',
       colors: 'bg-gradient-to-r from-blue-300/4 to-blue-400/4 dark:from-blue-500/6 dark:to-blue-600/6',
       position: 'top-1/2 left-1/2',
-      duration: 32, // Optimized for better performance
-      delay: 4,
       blur: 'blur-xl'
     }
   ], [])
@@ -170,11 +164,11 @@ function App() {
       )}
       {/* Premium background pattern */}
       <div className="absolute inset-0 opacity-4 dark:opacity-3" aria-hidden="true">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.15)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.08)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.15)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.08)_1px,transparent_0)] bg-[length:20px_20px] hidden sm:block"></div>
       </div>
 
       {/* Optimized background elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none hidden sm:block" aria-hidden="true">
         {backgroundElements.map((element) => (
           <div
             key={element.id}
