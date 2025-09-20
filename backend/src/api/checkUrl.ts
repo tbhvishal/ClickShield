@@ -1,5 +1,5 @@
 
-import { Router } from 'express';
+import express, { Router } from 'express';
 import axios from 'axios';
 import https from 'https';
 import type { Request, Response } from 'express';
@@ -272,5 +272,11 @@ router.post('/check-url', async (req: Request, res: Response) => {
   });
 });
 
-export default router;
+// Create an Express app and mount the router so serverless platforms
+// (like Vercel) can use this file as an entrypoint.
+const app = express();
+app.use(express.json());
+app.use('/', router);
+
+export default app;
 
