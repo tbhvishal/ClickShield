@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="frontend/public/clickshield-banner.png" alt="ClickShield Banner" width="100%" style="max-width:800px; border-radius:18px; margin:18px 0; box-shadow:0 4px 32px #00d4aa22;"/>
+  <img src="frontend/public/assets/clickshield-banner.png" alt="ClickShield Banner" width="100%" style="max-width:800px; border-radius:18px; margin:18px 0; box-shadow:0 4px 32px #00d4aa22;"/>
   <p>
     <img src="https://img.shields.io/badge/React-18.2.0-61dafb?style=flat-square&logo=react" alt="React" />
     <img src="https://img.shields.io/badge/TypeScript-5.3-3178c6?style=flat-square&logo=typescript" alt="TypeScript" />

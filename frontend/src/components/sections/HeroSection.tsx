@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Zap, Radar, ShieldCheck } from 'lucide-react'
-const logo = '/500x500.png'
+const logo = '/assets/500x500.png'
 
 const HeroSection = () => {
   return (
