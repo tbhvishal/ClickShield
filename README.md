@@ -90,7 +90,7 @@ Before you begin, ensure you have the following installed:
    ```bash
    npm start
    ```
-   *Note: This command automatically installs all dependencies for the root, backend, and frontend, builds the project, and starts both the backend and frontend servers in development mode.*
+   *Note: This command automatically installs all dependencies for the root, backend, and frontend, builds the project, and starts both the backend and frontend servers*
 
 ### <img src="https://api.iconify.design/mdi:key.svg?color=%23ef4444" width="20"/> Google Safe Browsing API Setup
 
