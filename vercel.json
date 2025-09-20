@@ -1,3 +1,4 @@
+
 {
   "version": 2,
   "builds": [
@@ -9,18 +10,22 @@
       }
     },
     {
-      "src": "backend/src/api/check-url.ts",
+      "src": "backend/src/**/*.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/check-url",
-      "dest": "/backend/src/api/check-url.ts"
+      "src": "/api/(.*)",
+      "dest": "/backend/src/api/$1.ts"
     },
     {
       "src": "/(.*)",
       "dest": "/frontend/$1"
+    },
+    {
+      "src": "/.*",
+      "dest": "/frontend/index.html"
     }
   ]
 }
