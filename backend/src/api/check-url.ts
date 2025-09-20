@@ -1,3 +1,7 @@
+import express from 'express';
 import app from './checkUrl.js';
 
-export default app;
+const wrapper = express();
+wrapper.use('/api', app);
+
+export default wrapper;
