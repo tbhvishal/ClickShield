@@ -243,6 +243,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
           setCachedResult(urlToCheck, safeResult);
         }
       } catch (error: any) {
+        console.error('Error querying Safe Browsing for', urlToCheck, error && error.stack ? error.stack : error);
         // Dealing with cases where we've hit the API limit or it's down
         if (error.response && error.response.status === 429) {
           return res.status(503).json({
@@ -257,7 +258,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
           });
         }
         // Moving on to check the next URL variant
-      }
+  }
     }
   }
   // If all the variants are safe, send back the first safe one
@@ -266,6 +267,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
     return res.json(firstSafe);
   }
   // If we get to this point, something unexpected happened
+  console.error('Reached final fallback without a result for', urlVariants);
   return res.status(500).json({
     error: 'Unknown error',
     details: 'Unable to determine URL safety. Please try again.'
