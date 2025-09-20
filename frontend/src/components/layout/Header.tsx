@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Moon, Sun } from 'lucide-react'
-const logo = '/assets/500x500.png'
+import logo from '../../assets/500x500.png'
 
 const Header = () => {
   const [darkMode, setDarkMode] = useState(false)

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import { loadEnv } from 'vite';
 
@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
 
   const env = loadEnv(mode, new URL('..', import.meta.url).pathname, '');
   return {
-    plugins: [react()],
+    plugins: [react(), viteStaticCopy({ targets: [{ src: 'src/assets/*', dest: 'assets' }] })],
     server: {
       port: Number(env.FRONTEND_PORT) || 5173,
       proxy: {

@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf'
 import { PredictionResult } from '../App'
-const logo = '/assets/500x500.png'
+import logo from '../assets/500x500.png'
 
 /**
  * Generates a premium, professional PDF security report
