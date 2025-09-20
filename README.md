@@ -81,16 +81,41 @@ Before you begin, ensure you have the following installed:
 ### <img src="https://api.iconify.design/mdi:clipboard-list.svg?color=%23f59e0b" width="20"/> Setup Instructions
 
 1. **<img src="https://api.iconify.design/mdi:download.svg?color=%233b82f6" width="16"/> Clone the repository**
-   ```bash
-   git clone https://github.com/tbhvishal/ClickShield.git
-   cd ClickShield
-   ```
+  ```bash
+  git clone https://github.com/tbhvishal/ClickShield.git
+  cd ClickShield
+  ```
 
-2. <img src="https://api.iconify.design/mdi:package-variant-closed.svg?color=%2310b981" width="18"/> **Install dependencies and start the application**
-   ```bash
-   npm start
-   ```
-   *Note: This command automatically installs all dependencies for the root, backend, and frontend, builds the project, and starts both the backend and frontend servers*
+
+
+2. <img src="https://api.iconify.design/mdi:play.svg?color=%2310b981" width="16"/> **Start the application in development mode**
+  ```bash
+  npm start
+  ```
+  *This will install all dependencies, build the project, and start both frontend and backend servers for local development.*
+
+---
+
+## <img src="https://api.iconify.design/mdi:cloud.svg?color=%233b82f6" width="24"/> Production & Cloud Deployment
+
+### <img src="https://api.iconify.design/mdi:cloud-upload.svg?color=%2310b981" width="20"/> Deploying to Cloud Providers
+
+1. **Install all dependencies (in CI/CD or cloud build step):**
+  ```bash
+  npm run install:all
+  ```
+2. **Build the project for production:**
+  ```bash
+  npm run build
+  ```
+  - This builds the frontend (Vite) to `frontend/dist/` and the backend (TypeScript) to `backend/dist/`.
+3. **Serve the built frontend and backend:**
+  - Serve `frontend/dist/` as static files using your cloud provider's static hosting solution.
+  - Run the backend from `backend/dist/` as a Node.js server or deploy as serverless functions, depending on your cloud provider's capabilities.
+
+**Do not use `npm start` for production or cloud deployment.**
+  - `npm start` is for local development only.
+  - Always use `npm run build` for production builds.
 
 ### <img src="https://api.iconify.design/mdi:key.svg?color=%23ef4444" width="20"/> Google Safe Browsing API Setup
 
