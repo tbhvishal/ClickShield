@@ -238,7 +238,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
         } else {
           // Checking the SSL certificate if it's an HTTPS site
           const sslVerified = await checkSSL(urlToCheck);
-          // Saving this safe result in the cache for later
+          // Saving this safe result in the cache for later and return immediately
           const safeResult = {
             url: urlToCheck,
             safe: true,
@@ -252,7 +252,9 @@ router.post('/check-url', async (req: Request, res: Response) => {
             recommendation: 'This website appears safe, but always exercise caution online.',
             cached: false
           };
+          console.log('Safe result computed for', urlToCheck);
           setCachedResult(urlToCheck, safeResult);
+          return res.json(safeResult);
         }
       } catch (error: any) {
         console.error('Error querying Safe Browsing for', urlToCheck, error && error.stack ? error.stack : error);
