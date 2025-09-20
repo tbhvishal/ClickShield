@@ -86,21 +86,11 @@ Before you begin, ensure you have the following installed:
    cd ClickShield
    ```
 
-2. <img src="https://api.iconify.design/mdi:package-variant-closed.svg?color=%2310b981" width="18"/> **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **<img src="https://api.iconify.design/mdi:cog.svg?color=%23ef4444" width="16"/> Configure environment**
-   ```bash
-   cp .env.example .env
-   # Edit .env file in the root directory with your Google Safe Browsing API key
-   ```
-
-4. **<img src="https://api.iconify.design/mdi:play.svg?color=%2310b981" width="16"/> Start the application**
+2. <img src="https://api.iconify.design/mdi:package-variant-closed.svg?color=%2310b981" width="18"/> **Install dependencies and start the application**
    ```bash
    npm start
    ```
+   *Note: This command automatically installs all dependencies for the root, backend, and frontend, builds the project, and starts both the backend and frontend servers in development mode.*
 
 ### <img src="https://api.iconify.design/mdi:key.svg?color=%23ef4444" width="20"/> Google Safe Browsing API Setup
 
