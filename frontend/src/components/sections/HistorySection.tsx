@@ -17,4 +17,9 @@ const HistorySection = ({ history, currentResult }: HistorySectionProps) => {
         transition={{ delay: 0.25, duration: 0.3 }}
       >
         {/* HistoryList will be lazy loaded */}
-      </motion.div>
+      </motion.div>
+    </section>
+  )
+}
+
+export default HistorySection

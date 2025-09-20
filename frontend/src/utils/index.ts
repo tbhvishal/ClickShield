@@ -1,0 +1,1 @@
+export { generatePDFReport } from './pdfGenerator'

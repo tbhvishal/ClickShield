@@ -1,3 +1,4 @@
+
 {
   "version": 2,
   "builds": [
@@ -9,12 +10,18 @@
       }
     },
     {
-      "src": "backend/package.json",
+      "src": "backend/src/**/*.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/src/$1"
-    },
+      "dest": "/backend/src/$1.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/dist/$1"
+    }
+  ]
+}

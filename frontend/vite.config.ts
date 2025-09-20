@@ -6,7 +6,7 @@ import { loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
 
-  const env = loadEnv(mode, new URL('.', import.meta.url).pathname, '');
+  const env = loadEnv(mode, new URL('..', import.meta.url).pathname, '');
   return {
     plugins: [react()],
     server: {
