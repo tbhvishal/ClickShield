@@ -30,11 +30,11 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
         setDisplayUrl(trimmedUrl)
         setValidationMessage('Please include a domain extension (e.g., .com, .org)')
       } else if (trimmedUrl && trimmedUrl.includes(' ') || trimmedUrl.includes('<') || trimmedUrl.includes('>')) {
-        // Contains invalid characters
+        // The URL has some invalid characters in it
         setDisplayUrl(trimmedUrl)
         setValidationMessage('URL contains invalid characters')
       } else if (trimmedUrl && (trimmedUrl.includes('..') || trimmedUrl.startsWith('.') || trimmedUrl.endsWith('.'))) {
-        // Invalid domain structure
+        // The domain structure doesn't look right
         setDisplayUrl(trimmedUrl)
         setValidationMessage('Invalid domain structure')
       } else {
@@ -59,7 +59,7 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
       const text = await navigator.clipboard.readText()
       setUrl(text)
     } catch (err) {
-      // Failed to paste
+      // Couldn't paste from clipboard
     }
   }
 
@@ -78,7 +78,7 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
         return false // No TLD
       }
 
-      // Check for valid TLD (basic check)
+      // Doing a basic check for a valid top-level domain
       const hostname = url.hostname.toLowerCase()
       const validTlds = ['.com', '.org', '.net', '.edu', '.gov', '.mil', '.info', '.biz', '.co', '.io', '.dev', '.app']
       const hasValidTld = validTlds.some(tld => hostname.endsWith(tld)) || hostname.includes('.')

@@ -150,11 +150,11 @@ router.post('/check-url', async (req: Request, res: Response) => {
   }
   
   for (const variant of urlVariants) {
-    // Follow redirects to get the final URL
+    // Following any redirects to find the actual final URL
     const finalUrl = await getFinalRedirectUrl(variant);
     const urlsToCheck = finalUrl !== variant ? [variant, finalUrl] : [variant];
     for (const urlToCheck of urlsToCheck) {
-      // Check if the domain is reachable before Safe Browsing
+      // Checking if the domain can be reached before checking with Safe Browsing
       try {
         const parsed = new URL(urlToCheck);
         const reachable = await isDomainReachable(parsed.hostname);
@@ -177,7 +177,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
           return res.json(unreachableResult);
         }
       } catch (e) {
-        // If URL parsing fails, skip to next
+        // If we can't parse the URL, just move on to the next one
         continue;
       }
       const requestBody: GoogleSafeBrowsingRequest = {
@@ -224,9 +224,9 @@ router.post('/check-url', async (req: Request, res: Response) => {
           setCachedResult(urlToCheck, threatResult);
           return res.json(threatResult);
         } else {
-          // Check SSL if HTTPS
+          // Checking the SSL certificate if it's an HTTPS site
           const sslVerified = await checkSSL(urlToCheck);
-          // Cache safe result for this variant
+          // Saving this safe result in the cache for later
           const safeResult = {
             url: urlToCheck,
             safe: true,
@@ -243,7 +243,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
           setCachedResult(urlToCheck, safeResult);
         }
       } catch (error: any) {
-        // Handle quota exceeded or API unavailable
+        // Dealing with cases where we've hit the API limit or it's down
         if (error.response && error.response.status === 429) {
           return res.status(503).json({
             error: 'Google Safe Browsing quota exceeded',
@@ -256,16 +256,16 @@ router.post('/check-url', async (req: Request, res: Response) => {
             details: 'The service is temporarily unavailable. Please try again later.'
           });
         }
-        // Continue to next variant
+        // Moving on to check the next URL variant
       }
     }
   }
-  // If all variants are safe, return the first safe result
+  // If all the variants are safe, send back the first safe one
   const firstSafe = getCachedResult(urlVariants[0]);
   if (firstSafe) {
     return res.json(firstSafe);
   }
-  // If we reach here, something went wrong
+  // If we get to this point, something unexpected happened
   return res.status(500).json({
     error: 'Unknown error',
     details: 'Unable to determine URL safety. Please try again.'
