@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
 import { AlertTriangle, Zap, ShieldCheck, Eye } from 'lucide-react'
-import logo from './assets/500x500.png'
+const logo = '/500x500.png'
 
 // Loading components only when needed to keep things fast
 const SecurityTipsButton = lazy(() => import('./components/SecurityTipsButton'))

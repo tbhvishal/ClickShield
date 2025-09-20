@@ -1,6 +1,6 @@
 import { Github, Shield, Zap, Heart, Globe, FileText } from 'lucide-react'
 
-import logo from '../../assets/500x500.png'
+const logo = '/500x500.png'
 
 const Footer = () => {
   return (
