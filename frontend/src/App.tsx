@@ -73,11 +73,10 @@ function App() {
     setCurrentResult(null)
 
     try {
-      const apiBaseUrl = import.meta.env.VITE_BACKEND_API_URL;
-      if (!apiBaseUrl) {
-        throw new Error('VITE_BACKEND_API_URL is not set in your environment. Please define it in your .env file.');
-      }
-      const response = await fetch(`${apiBaseUrl}/api/check-url`, {
+      // Use configured backend URL when provided, otherwise use relative API path
+      const apiBaseUrl = import.meta.env.VITE_BACKEND_API_URL || '';
+      const fetchUrl = apiBaseUrl ? `${apiBaseUrl.replace(/\/$/, '')}/api/check-url` : '/api/check-url';
+      const response = await fetch(fetchUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
