@@ -198,7 +198,7 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
                     }
                   }}
                   placeholder="Enter website address to scan (e.g. https://example.com)"
-                  className="w-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5 pr-16 sm:pr-20 text-sm sm:text-base lg:text-lg text-center border-2 border-gray-200/30 dark:border-gray-600/30 rounded-full focus:border-blue-400 focus:ring-4 focus:ring-blue-400/20 dark:bg-gradient-to-r dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-md shadow-2xl hover:shadow-3xl focus:shadow-3xl focus:outline-none transition-all duration-500 bg-white/95 dark:text-white dark:placeholder-gray-400 placeholder:text-gray-500 dark:placeholder:text-gray-500"
+                  className="w-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5 pr-16 sm:pr-20 text-base sm:text-base lg:text-lg text-center border-2 border-gray-200/30 dark:border-gray-600/30 rounded-full focus:border-blue-400 focus:ring-4 focus:ring-blue-400/20 dark:bg-gradient-to-r dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-md shadow-2xl hover:shadow-3xl focus:shadow-3xl focus:outline-none transition-all duration-500 bg-white/95 dark:text-white dark:placeholder-gray-400 placeholder:text-gray-500 dark:placeholder:text-gray-500"
                   disabled={isLoading}
                   autoComplete="off"
                   spellCheck="false"

@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent zoom on input focus for mobile devices */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+    -webkit-text-size-adjust: 100%;
+    -webkit-appearance: none;
+  }
+
+  /* Prevent zoom on focus */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+/* Ensure minimum font size for all inputs on mobile */
+@media screen and (max-width: 480px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    line-height: 1.2;
+  }
+}
+
 /* Scroll highlight animation for search results */
 .scroll-highlight {
   animation: scrollHighlight 2s ease-in-out;
