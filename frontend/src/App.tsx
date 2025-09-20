@@ -70,6 +70,10 @@ function App() {
       // Use configured backend URL when provided, otherwise use relative API path
       const apiBaseUrl = import.meta.env.VITE_BACKEND_API_URL || '';
       const fetchUrl = apiBaseUrl ? `${apiBaseUrl.replace(/\/$/, '')}/api/check-url` : '/api/check-url';
+
+      console.log('Making API call to:', fetchUrl);
+      console.log('VITE_BACKEND_API_URL:', import.meta.env.VITE_BACKEND_API_URL);
+
       const response = await fetch(fetchUrl, {
         method: 'POST',
         headers: {
@@ -147,8 +151,22 @@ function App() {
       }, 800); // Increased delay to ensure component is fully rendered
 
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
-      setError(errorMessage)
+      console.error('API Error:', error);
+      let errorMessage = 'An unexpected error occurred';
+
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        errorMessage = 'Network error: Unable to connect to server. Please check your internet connection.';
+      } else if (error instanceof Error) {
+        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          errorMessage = 'Network error: Please check your internet connection and try again.';
+        } else if (error.message.includes('CORS')) {
+          errorMessage = 'Connection error: Server is not responding. Please try again later.';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+
+      setError(errorMessage);
     } finally {
       setIsLoading(false)
     }
