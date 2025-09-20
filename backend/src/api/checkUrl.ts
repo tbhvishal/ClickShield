@@ -9,10 +9,21 @@ const router = Router();
 
 
 const cache = new Map<string, { data: any; timestamp: number }>();
+const normalizeUrlKey = (u: string): string => {
+  try {
+    const p = new URL(u);
+    const port = p.port ? `:${p.port}` : '';
+    const pathname = p.pathname.replace(/\/$/, '');
+    return `${p.protocol}//${p.hostname}${port}${pathname}`;
+  } catch {
+    return u.replace(/\/$/, '');
+  }
+};
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 const getCachedResult = (url: string): any | null => {
-  const cached = cache.get(url);
+  const key = normalizeUrlKey(url);
+  const cached = cache.get(key);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     return cached.data;
   }
@@ -23,7 +34,8 @@ const getCachedResult = (url: string): any | null => {
 };
 
 const setCachedResult = (url: string, data: any): void => {
-  cache.set(url, { data, timestamp: Date.now() });
+  const key = normalizeUrlKey(url);
+  cache.set(key, { data, timestamp: Date.now() });
 };
 
 const getFinalRedirectUrl = async (url: string): Promise<string> => {
