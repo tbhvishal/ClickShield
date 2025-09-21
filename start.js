@@ -7,7 +7,6 @@ function run(cmd, cwd) {
   console.log(`\n> ${cmd} (in ${cwd || process.cwd()})`);
   execSync(cmd, { stdio: 'inherit', cwd: cwd || process.cwd() });
 }
-
 function ensureConcurrentlyInstalled() {
   try {
     require.resolve('concurrently');
