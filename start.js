@@ -16,7 +16,6 @@ function ensureConcurrentlyInstalled() {
   }
 }
 
-
 function installAll() {
   // Install dependencies for the main project if package.json is there
   if (fs.existsSync('package.json')) {
