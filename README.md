@@ -25,7 +25,6 @@
 ClickShield is a modern, user-friendly web application that helps users identify potentially malicious websites and phishing attempts. Built with React and TypeScript, it leverages Google's Safe Browsing API to provide real-time threat analysis and comprehensive security reports.
 
 
-
 ## <img src="https://api.iconify.design/mdi:star-four-points.svg?color=%23f59e0b" width="24"/> Features
 
 
