@@ -100,7 +100,19 @@ Before you begin, ensure you have the following installed:
   VITE_BACKEND_API_URL=http://localhost:8001
   ```
 
-3. **<img src="https://api.iconify.design/mdi:play.svg?color=%2310b981" width="16"/> Start the application in development mode**
+3. **<img src="https://api.iconify.design/mdi:check-circle.svg?color=%238b5cf6" width="16"/> Verify your setup (Optional but Recommended)**
+  ```bash
+  npm run verify
+  ```
+  *This will check:*
+  - ✓ Node.js version (18+)
+  - ✓ `.env` file exists and is configured correctly
+  - ✓ All required dependencies are installed
+  - ✓ Project structure is correct
+  
+  **If all checks pass ✅, you're ready to go!**
+
+4. **<img src="https://api.iconify.design/mdi:play.svg?color=%2310b981" width="16"/> Start the application in development mode**
   ```bash
   npm start
   ```
@@ -184,7 +196,39 @@ VITE_BACKEND_API_URL=  # Leave empty - uses relative URLs
 4. **<img src="https://api.iconify.design/mdi:file-chart.svg?color=%2310b981" width="16"/> Report Generation**: Comprehensive security report
 5. **<img src="https://api.iconify.design/mdi:download.svg?color=%23ef4444" width="16"/> PDF Export**: Optional professional PDF report
 
+---
 
+## <img src="https://api.iconify.design/mdi:console.svg?color=%23f59e0b" width="24"/> Available Scripts
+
+### <img src="https://api.iconify.design/mdi:wrench.svg?color=%233b82f6" width="20"/> Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | 🚀 Install dependencies, build, and start both servers for local development |
+| `npm run verify` | ✅ Verify your setup is configured correctly (recommended before first run) |
+| `npm run dev:backend` | 🔧 Start only the backend server in development mode |
+| `npm run dev:frontend` | 🎨 Start only the frontend server in development mode |
+| `npm run install:all` | 📦 Install dependencies for root, backend, and frontend |
+
+### <img src="https://api.iconify.design/mdi:package-variant.svg?color=%2310b981" width="20"/> Build & Production Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run build` | 🏗️ Build both frontend and backend for production |
+| `npm run build:backend` | 🔨 Build only the backend |
+| `npm run build:frontend` | 🎭 Build only the frontend |
+| `npm run start:backend` | ▶️ Start the built backend server |
+| `npm run start:frontend` | 🌐 Preview the built frontend |
+
+### <img src="https://api.iconify.design/mdi:broom.svg?color=%23ef4444" width="20"/> Maintenance Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run clean` | 🧹 Remove all node_modules and dist folders |
+
+**💡 Tip:** Always run `npm run verify` after cloning the repository or changing your `.env` file to ensure everything is configured correctly!
+
+---
 
 ## <img src="https://api.iconify.design/mdi:api.svg?color=%233b82f6" width="24"/> API Reference
 
