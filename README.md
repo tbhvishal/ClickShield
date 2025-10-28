@@ -537,6 +537,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  <p><strong><img src="https://api.iconify.design/mdi:shield-check.svg?color=%2310b981" width="24"/> Stay Safe Online with ClickShield <img src="https://api.iconify.design/mdi:shield-check.svg?color=%2310b981" width="24"/></strong></p>
+  <p><strong><img src="https://github.com/tbhvishal/ClickShield/blob/main/frontend/src/assets/500x500.png?raw=true" width="24"/> Stay Safe Online with ClickShield <img src="https://github.com/tbhvishal/ClickShield/blob/main/frontend/src/assets/500x500.png?raw=true" width="24"/></strong></p>
   <p><em>Advanced threat detection for a safer internet experience</em></p>
 </div>
