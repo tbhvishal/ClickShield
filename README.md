@@ -57,7 +57,7 @@ ClickShield is a modern, user-friendly web application that helps users identify
 
 ### <img src="https://api.iconify.design/mdi:server.svg?color=%2310b981" alt="Backend" width="20" height="20"> Backend
 - <img src="https://api.iconify.design/logos:nodejs-icon.svg" width="18"/> **Node.js** - JavaScript runtime
-- <img src="https://api.iconify.design/devicon:express" width="18"/> **Express.js** - Web application framework
+- <img src="https://img.icons8.com/?size=100&id=2ZOaTclOqD4q&format=png&color=000000" width="18"/> **Express.js** - Web application framework
 - <img src="https://api.iconify.design/logos:google-icon.svg" width="18"/> **Google Safe Browsing API** - Threat intelligence
 
 
