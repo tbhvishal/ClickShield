@@ -15,6 +15,7 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       const trimmedUrl = url.trim()
+      const invalidChars = /[\s<>"'`{}|\\^]/
 
       if (!trimmedUrl) {
         setDisplayUrl('')
@@ -22,15 +23,15 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
         return
       }
 
-      if (!trimmedUrl.includes('://') && trimmedUrl.includes('.')) {
+      if (!trimmedUrl.includes('://') && trimmedUrl.includes('.') && !invalidChars.test(trimmedUrl)) {
         const completedUrl = `https://${trimmedUrl}`
         setDisplayUrl(completedUrl)
         setValidationMessage('')
       } else if (trimmedUrl && !trimmedUrl.includes('.')) {
         setDisplayUrl(trimmedUrl)
         setValidationMessage('Please include a domain extension (e.g., .com, .org)')
-      } else if (trimmedUrl && trimmedUrl.includes(' ') || trimmedUrl.includes('<') || trimmedUrl.includes('>')) {
-        // The URL has some invalid characters in it
+      } else if (trimmedUrl && invalidChars.test(trimmedUrl)) {
+        // The URL has some invalid characters in it (spaces, <, >, quotes, backticks, braces, pipe, backslash, caret)
         setDisplayUrl(trimmedUrl)
         setValidationMessage('URL contains invalid characters')
       } else if (trimmedUrl && (trimmedUrl.includes('..') || trimmedUrl.startsWith('.') || trimmedUrl.endsWith('.'))) {
@@ -68,6 +69,8 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
 
   const isValidUrl = (string: string) => {
     if (!string.trim()) return false
+    const invalidChars = /[\s<>"'`{}|\\^]/
+    if (invalidChars.test(string)) return false
 
     try {
       const urlToTest = string.includes('://') ? string : `https://${string}`

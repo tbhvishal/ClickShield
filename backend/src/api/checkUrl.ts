@@ -108,7 +108,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
   }
   const trimmedUrl = rawUrl.trim().replace(/^['"]+|['"]+$/g, '');
   
-  if (!trimmedUrl || /[\s\x00-\x1F\x7F"'<>`]/.test(trimmedUrl)) {
+  if (!trimmedUrl || /[\s\x00-\x1F\x7F"'<>`{}|\\^]/.test(trimmedUrl)) {
     return res.status(400).json({
       error: 'Invalid URL provided.',
       details: 'URL cannot be empty or contain spaces, quotes, or control characters.'
