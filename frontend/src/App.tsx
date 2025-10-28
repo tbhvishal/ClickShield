@@ -81,8 +81,17 @@ function App() {
         },
         body: JSON.stringify({ url }),
       })
-
-      const data = await response.json()
+      // Safely handle non-JSON responses to avoid "Unexpected token '<'" errors
+      let data: any
+      const contentType = response.headers.get('content-type') || ''
+      if (contentType.includes('application/json')) {
+        data = await response.json()
+      } else {
+        const text = await response.text()
+        // Log the unexpected response for diagnostics and throw a friendly error
+        console.error('Non-JSON response from server:', text.slice(0, 300))
+        throw new Error('Unexpected server response. Please try again in a moment.')
+      }
 
       console.log('Google Safe Browsing API Response:', data)
       console.log('Response Details:')
