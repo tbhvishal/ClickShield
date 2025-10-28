@@ -85,8 +85,6 @@ const checkSSL = async (url: string): Promise<boolean> => {
 };
 
 router.post('/check-url', async (req: Request, res: Response) => {
-  // Count how many URL variants we actually attempted (including redirect targets)
-  let checkedVariantsActual = 0;
  
   const isDomainReachable = async (hostname: string): Promise<boolean> => {
     try {
@@ -168,19 +166,16 @@ router.post('/check-url', async (req: Request, res: Response) => {
     }
   }
   
+  // Track the actual number of URL forms we evaluated, including redirect targets
+  const checkedUrls = new Set<string>();
+
   for (const variant of urlVariants) {
     // Following any redirects to find the actual final URL
     const finalUrl = await getFinalRedirectUrl(variant);
     const urlsToCheck = finalUrl !== variant ? [variant, finalUrl] : [variant];
     for (const urlToCheck of urlsToCheck) {
-      // Increment count for each concrete URL we attempt to validate/check
-      try {
-        // Only count if it parses as a URL
-        new URL(urlToCheck);
-        checkedVariantsActual++;
-      } catch {
-        // Skip counting invalid parse
-      }
+      // Count this URL as being evaluated (DNS + optional Safe Browsing)
+      checkedUrls.add(urlToCheck);
       // Checking if the domain can be reached before checking with Safe Browsing
       try {
         const parsed = new URL(urlToCheck);
@@ -194,7 +189,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
             threat_description: 'Domain is unreachable or does not exist. Treat as suspicious.',
             confidence: 'MEDIUM',
             matches: [],
-            checked_variations: checkedVariantsActual,
+            checked_variations: checkedUrls.size,
             ssl_verified: false, // Unreachable domains can't have valid SSL
             recommendation: 'Do not trust this website. The domain does not resolve.',
             cached: false,
@@ -243,7 +238,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
             threat_description: threatDetails[match.threatType as keyof typeof threatDetails] || 'Unknown threat detected',
             confidence: 'HIGH',
             matches: data.matches,
-            checked_variations: checkedVariantsActual,
+            checked_variations: checkedUrls.size,
             ssl_verified: await checkSSL(urlToCheck),
             recommendation: 'Do not visit this website. It has been flagged as dangerous.',
             cached: false
@@ -262,7 +257,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
             threat_description: 'No known threats detected',
             confidence: 'HIGH',
             matches: [],
-            checked_variations: checkedVariantsActual,
+            checked_variations: checkedUrls.size,
             ssl_verified: sslVerified,
             recommendation: 'This website appears safe, but always exercise caution online.',
             cached: false
