@@ -95,10 +95,10 @@ Before you begin, ensure you have the following installed:
   **Important:** For local development, ensure your `.env` file contains:
   ```env
   GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-  PORT=8001
-  FRONTEND_PORT=5173
   VITE_BACKEND_API_URL=http://localhost:8001
   ```
+  
+  **Note:** Port numbers (8001, 5173) and other non-sensitive configs are defined in `config.ts` at the root.
 
 3. **<img src="https://api.iconify.design/mdi:check-circle.svg?color=%238b5cf6" width="16"/> Verify your setup (Optional but Recommended)**
   ```bash
@@ -132,10 +132,13 @@ Before you begin, ensure you have the following installed:
 **For Local Development (`.env`):**
 ```env
 GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-PORT=8001
-FRONTEND_PORT=5173
 VITE_BACKEND_API_URL=http://localhost:8001  # Important: Must be set for local dev
 ```
+
+**Configuration File (`config.ts`):**
+- Port numbers (8001, 5173) and other non-sensitive settings
+- Committed to version control
+- Easy to modify without touching `.env`
 
 **For Production/Vercel (Vercel Dashboard):**
 - Set `GOOGLE_SAFE_BROWSING_API_KEY` in Vercel environment variables

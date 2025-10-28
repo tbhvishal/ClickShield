@@ -11,8 +11,10 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import app from './app.js';
 
+// Configuration - using defaults from config file concept
 const PORT = process.env.PORT || 8001;
-const FRONTEND_URL = process.env.VITE_BACKEND_API_URL ? 'http://localhost:5173' : 'Production';
+const FRONTEND_PORT = process.env.FRONTEND_PORT || 5173;
+const FRONTEND_URL = process.env.VITE_BACKEND_API_URL ? `http://localhost:${FRONTEND_PORT}` : 'Production';
 
 app.listen(PORT, () => {
   console.log(`✅ Backend server running on http://localhost:${PORT}`);
