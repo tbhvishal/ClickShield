@@ -9,6 +9,29 @@ const router = Router();
 
 
 const cache = new Map<string, { data: any; timestamp: number }>();
+// Strict hostname validator mirroring frontend rules
+// - at least one dot
+// - no leading/trailing/consecutive dots
+// - labels 1-63 chars, [A-Za-z0-9-], no leading/trailing hyphen
+// - TLD is alphabetic with length >=2 OR punycode form xn--*
+const isHostnameValid = (hostname: string): boolean => {
+  if (!hostname) return false;
+  if (hostname.length < 4) return false;
+  if (!hostname.includes('.')) return false;
+  if (hostname.includes('..')) return false;
+  if (hostname.startsWith('.') || hostname.endsWith('.')) return false;
+  const labels = hostname.split('.');
+  for (let i = 0; i < labels.length; i++) {
+    const label = labels[i];
+    if (label.length < 1 || label.length > 63) return false;
+    // allow punycode prefix xn-- but still only [A-Za-z0-9-]
+    if (!/^[A-Za-z0-9-]+$/.test(label)) return false;
+    if (label.startsWith('-') || label.endsWith('-')) return false;
+  }
+  const tld = labels[labels.length - 1];
+  if (!/^[A-Za-z]{2,}$/.test(tld) && !/^xn--[A-Za-z0-9-]+$/.test(tld)) return false;
+  return true;
+};
 const normalizeUrlKey = (u: string): string => {
   try {
     const p = new URL(u);
@@ -125,8 +148,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
   urlVariants = urlVariants.filter(variant => {
     try {
       const parsedUrl = new URL(variant);
-      if (!parsedUrl.hostname || parsedUrl.hostname.length < 4) return false;
-      if (!parsedUrl.hostname.includes('.')) return false;
+      if (!isHostnameValid(parsedUrl.hostname)) return false;
       return true;
     } catch {
       return false;

@@ -33,7 +33,7 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
       } else if (trimmedUrl && invalidChars.test(trimmedUrl)) {
         // The URL has some invalid characters in it (spaces, <, >, quotes, backticks, braces, pipe, backslash, caret)
         setDisplayUrl(trimmedUrl)
-        setValidationMessage('URL contains invalid characters')
+        setValidationMessage("URL contains invalid characters. Allowed: letters, numbers, -._~:/?#[]@!$&'()*+,;=%")
       } else if (trimmedUrl && (trimmedUrl.includes('..') || trimmedUrl.startsWith('.') || trimmedUrl.endsWith('.'))) {
         // The domain structure doesn't look right
         setDisplayUrl(trimmedUrl)
@@ -76,27 +76,23 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
       const urlToTest = string.includes('://') ? string : `https://${string}`
       const url = new URL(urlToTest)
 
-      if (!url.hostname || url.hostname.length < 4) {
-        return false
+      // Hostname validation: labels 1-63 chars, allowed [A-Za-z0-9-], no leading/trailing hyphen, at least one dot
+      const hostname = url.hostname
+      if (!hostname || hostname.length < 4 || !hostname.includes('.')) return false
+      if (hostname.includes('..') || hostname.startsWith('.') || hostname.endsWith('.')) return false
+      const labels = hostname.split('.')
+      for (let i = 0; i < labels.length; i++) {
+        const label = labels[i]
+        if (label.length < 1 || label.length > 63) return false
+        // allow punycode prefix xn--
+        if (!/^[A-Za-z0-9-]+$/.test(label)) return false
+        if (label.startsWith('-') || label.endsWith('-')) return false
       }
+      // TLD should be alphabetic (punycode converted appears as xn--*) so allow letters or xn--*
+      const tld = labels[labels.length - 1]
+      if (!/^[A-Za-z]{2,}$/.test(tld) && !/^xn--[A-Za-z0-9-]+$/.test(tld)) return false
 
-      if (!url.hostname.includes('.')) {
-        return false // No TLD
-      }
-
-      // Doing a basic check for a valid top-level domain
-      const hostname = url.hostname.toLowerCase()
-      const validTlds = ['.com', '.org', '.net', '.edu', '.gov', '.mil', '.info', '.biz', '.co', '.io', '.dev', '.app']
-      const hasValidTld = validTlds.some(tld => hostname.endsWith(tld)) || hostname.includes('.')
-
-      if (!hasValidTld) {
-        return false // Invalid or missing TLD
-      }
-
-      if (hostname.includes('..') || hostname.startsWith('.') || hostname.endsWith('.')) {
-        return false
-      }
-
+      // Paths/search/hash must not contain spaces or disallowed control characters; rely on earlier invalidChars and URL parse
       return true
     } catch (_) {
       return false
