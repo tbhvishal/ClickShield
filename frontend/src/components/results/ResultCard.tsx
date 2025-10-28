@@ -596,10 +596,7 @@ Matches Found: ${result.matches?.length || 0}`
                       <div className="flex items-start space-x-2 p-3 bg-red-100 dark:bg-red-900/40 rounded-lg border border-red-200 dark:border-red-800">
                         <Shield className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
                         <p className="text-xs font-semibold text-red-800 dark:text-red-200">
-                          <strong className="inline-flex items-center space-x-1">
-                            <Shield className="w-3 h-3" />
-                            <span>Recommended Action:</span>
-                          </strong> {threatInfo.action}
+                          <strong>Recommended Action:</strong> {threatInfo.action}
                         </p>
                       </div>
                     </div>
