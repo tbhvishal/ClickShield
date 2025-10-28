@@ -201,8 +201,6 @@ VITE_BACKEND_API_URL=http://localhost:8001  # Important: Must be set for local d
 
 ## <img src="https://api.iconify.design/mdi:console.svg?color=%23f59e0b" width="24"/> Available Scripts
 
-### <img src="https://api.iconify.design/mdi:wrench.svg?color=%233b82f6" width="20"/> Development Commands
-
 | Command | Description |
 |---------|-------------|
 | `npm start` | 🚀 Install dependencies, build, and start both servers for local development |
@@ -210,24 +208,268 @@ VITE_BACKEND_API_URL=http://localhost:8001  # Important: Must be set for local d
 | `npm run dev:backend` | 🔧 Start only the backend server in development mode |
 | `npm run dev:frontend` | 🎨 Start only the frontend server in development mode |
 | `npm run install:all` | 📦 Install dependencies for root, backend, and frontend |
-
-### <img src="https://api.iconify.design/mdi:package-variant.svg?color=%2310b981" width="20"/> Build & Production Commands
-
-| Command | Description |
-|---------|-------------|
 | `npm run build` | 🏗️ Build both frontend and backend for production |
 | `npm run build:backend` | 🔨 Build only the backend |
 | `npm run build:frontend` | 🎭 Build only the frontend |
 | `npm run start:backend` | ▶️ Start the built backend server |
 | `npm run start:frontend` | 🌐 Preview the built frontend |
-
-### <img src="https://api.iconify.design/mdi:broom.svg?color=%23ef4444" width="20"/> Maintenance Commands
-
-| Command | Description |
-|---------|-------------|
 | `npm run clean` | 🧹 Remove all node_modules and dist folders |
 
 **💡 Tip:** Always run `npm run verify` after cloning the repository or changing your `.env` file to ensure everything is configured correctly!
+
+---
+
+## <img src="https://api.iconify.design/mdi:folder-outline.svg?color=%238b5cf6" width="24"/> Project Structure
+
+<details>
+<summary>Click to expand project structure</summary>
+
+```
+ClickShield/
+├── .env                    # ⚠️ Your local environment config (DO NOT COMMIT)
+├── .env.example            # Template for .env
+├── config.ts               # Non-sensitive configuration (ports, etc.)
+├── package.json            # Root package file
+├── start.js                # Development startup script
+├── verify-setup.js         # Setup verification script
+├── README.md               # This file - complete documentation
+├── backend/                # Backend Express API
+│   ├── src/
+│   │   ├── server.ts       # Server entry point
+│   │   ├── app.ts          # Express app configuration
+│   │   └── api/
+│   │       └── checkUrl.ts # URL checking API endpoint
+│   └── package.json
+└── frontend/               # Frontend React app
+    ├── src/
+    │   ├── App.tsx         # Main app component
+    │   └── components/     # React components
+    └── package.json
+```
+
+</details>
+
+---
+
+## <img src="https://api.iconify.design/mdi:wrench.svg?color=%23ef4444" width="24"/> Troubleshooting
+
+<details>
+<summary>🚫 Blank page or "Cannot connect to server"</summary>
+
+### Symptoms
+- Page title and favicon load but content doesn't appear
+- Browser console shows connection errors
+- Frontend can't reach backend API
+
+### Solution
+1. **Check your `.env` file in the root directory**
+   ```env
+   VITE_BACKEND_API_URL=http://localhost:8001
+   ```
+   ⚠️ This line **MUST** be set for local development!
+
+2. **Verify both servers are running:**
+   ```bash
+   # Backend should show:
+   ✅ Backend server running on http://localhost:8001
+   
+   # Frontend should show:
+   ➜  Local:   http://localhost:5173/
+   ```
+
+3. **If still not working, restart:**
+   ```bash
+   # Stop all servers (Ctrl+C)
+   # Then run:
+   npm start
+   ```
+
+</details>
+
+<details>
+<summary>🔑 "Google Safe Browsing API key not configured" error</summary>
+
+### Solution
+1. Get your API key from [Google Cloud Console](https://console.cloud.google.com/)
+2. Add it to root `.env` file:
+   ```env
+   GOOGLE_SAFE_BROWSING_API_KEY=your_actual_key_here
+   ```
+3. Restart the servers
+
+</details>
+
+<details>
+<summary>🌐 Works on Vercel but not locally (or vice versa)</summary>
+
+### Root Cause
+Different environment configurations
+
+### Solution
+
+**For Local Development** (`.env`):
+```env
+GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
+VITE_BACKEND_API_URL=http://localhost:8001  # ← REQUIRED for local!
+```
+
+**For Production/Vercel** (set in Vercel Dashboard):
+- `GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here`
+- `VITE_BACKEND_API_URL` should be EMPTY or not set
+
+**Note:** Port numbers (8001, 5173) are defined in `config.ts` - no need to set them in `.env`.
+
+</details>
+
+<details>
+<summary>📦 "Module not found" or dependency errors</summary>
+
+### Solution
+```bash
+# Clean install everything
+npm run clean
+npm run install:all
+
+# Or manually:
+cd backend && npm install
+cd ../frontend && npm install
+cd ..
+npm install
+```
+
+</details>
+
+<details>
+<summary>🏗️ Build fails or TypeScript errors</summary>
+
+### Solution
+```bash
+# Clean and rebuild
+cd backend && rm -rf dist node_modules
+npm install
+npm run build
+
+cd ../frontend && rm -rf dist node_modules
+npm install
+npm run build
+```
+
+</details>
+
+<details>
+<summary>🔄 Changes not reflecting after update</summary>
+
+### Solution
+```bash
+# Hard refresh in browser: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac)
+
+# Or clear Vite cache:
+cd frontend
+rm -rf node_modules/.vite
+npm run dev
+```
+
+</details>
+
+<details>
+<summary>🐳 Docker setup not working</summary>
+
+### Solution
+```bash
+# Make sure .env exists with proper values
+cp .env.example .env
+# Edit .env with your API key
+
+# Rebuild containers
+docker-compose down
+docker-compose up --build
+```
+
+</details>
+
+<details>
+<summary>✅ Quick verification checks</summary>
+
+### Verify Environment Setup
+
+```bash
+# Windows (PowerShell)
+Get-Content .env | Select-String "VITE_BACKEND_API_URL"
+
+# Mac/Linux
+cat .env | grep VITE_BACKEND_API_URL
+```
+
+**Expected output for local dev:**
+```
+VITE_BACKEND_API_URL=http://localhost:8001
+```
+
+### Check if Servers are Running
+
+```bash
+# Check backend
+curl http://localhost:8001/check-url
+
+# Should return: {"error":"Invalid or missing URL.",...}
+```
+
+### Check Frontend can reach Backend
+
+1. Open browser console (F12)
+2. Look for this log:
+   ```
+   VITE_BACKEND_API_URL: http://localhost:8001
+   ```
+3. If it shows `undefined`, your `.env` is not configured correctly
+
+### Check if Ports are in Use
+
+```bash
+# Windows
+netstat -ano | findstr :8001
+netstat -ano | findstr :5173
+
+# Mac/Linux
+lsof -i :8001
+lsof -i :5173
+```
+
+</details>
+
+<details>
+<summary>🆘 Still having issues?</summary>
+
+1. **Check the logs:**
+   - Backend logs show in the terminal where you ran `npm start`
+   - Frontend logs show in browser console (F12)
+
+2. **Try a different port:**
+   Update `config.ts` and `.env`:
+   
+   **config.ts:**
+   ```typescript
+   backend: 8002,  // Changed from 8001
+   ```
+   
+   **.env:**
+   ```env
+   VITE_BACKEND_API_URL=http://localhost:8002
+   ```
+
+3. **Check firewall/antivirus:**
+   - Allow Node.js through firewall
+   - Temporarily disable antivirus to test
+
+4. **Get help:**
+   - Check [GitHub Issues](https://github.com/tbhvishal/ClickShield/issues)
+   - Create a new issue with:
+     - Your OS and Node.js version
+     - Full error message
+     - Output of `npm start`
+     - Your `.env` configuration (without API key)
+
+</details>
 
 ---
 
@@ -276,213 +518,6 @@ If you find ClickShield helpful, please consider:
 - **<img src="https://api.iconify.design/mdi:share-variant.svg?color=%233b82f6" width="16"/> Sharing** with others
 - **<img src="https://api.iconify.design/mdi:handshake.svg?color=%2310b981" width="16"/> Contributing** to the project
 
----
-
-## <img src="https://api.iconify.design/mdi:help-circle.svg?color=%23f59e0b" width="24"/> Additional Resources
-
-<details>
-<summary><strong>🚀 Quick Start Guide (5 Minutes)</strong></summary>
-
-### Prerequisites
-- Node.js 18+ installed
-- Google Safe Browsing API key ([Get it here](https://developers.google.com/safe-browsing/v4/get-started))
-
-### Setup Steps
-
-**1. Clone and Install**
-```bash
-git clone https://github.com/tbhvishal/ClickShield.git
-cd ClickShield
-```
-
-**2. Configure Environment**
-Create `.env` file:
-```env
-GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-VITE_BACKEND_API_URL=http://localhost:8001
-```
-*Note: Port numbers are defined in `config.ts` (backend: 8001, frontend: 5173)*
-
-**3. Verify Setup**
-```bash
-npm run verify
-```
-
-**4. Start Development**
-```bash
-npm start
-```
-
-**5. Open Browser**
-- Frontend: http://localhost:5173
-- Backend: http://localhost:8001
-
-### Common Commands
-
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start both servers |
-| `npm run verify` | Check configuration |
-| `npm run build` | Build for production |
-| `npm run dev:backend` | Backend only |
-| `npm run dev:frontend` | Frontend only |
-
-</details>
-
-<details>
-<summary><strong>🔧 Troubleshooting Common Issues</strong></summary>
-
-### Issue 1: Blank Page (Only Title/Favicon)
-
-**Symptoms:**
-- Page loads but no content appears
-- Console shows CORS errors
-- API calls failing
-
-**Solution:**
-Check your `.env` file has:
-```env
-GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-VITE_BACKEND_API_URL=http://localhost:8001  # ← REQUIRED for local!
-```
-
-**Note:** Port numbers are in `config.ts` - no need to set them in `.env`.
-
----
-
-### Issue 2: "API Key Not Configured" Error
-
-**Symptoms:**
-- Error message about missing API key
-- Scans fail immediately
-
-**Solution:**
-1. Get API key from [Google Safe Browsing](https://developers.google.com/safe-browsing/v4/get-started)
-2. Add to `.env`:
-   ```env
-   GOOGLE_SAFE_BROWSING_API_KEY=your_actual_key_here
-   ```
-3. Restart servers: `npm start`
-
----
-
-### Issue 3: Port Already in Use
-
-**Symptoms:**
-- `Error: listen EADDRINUSE`
-- Cannot start server
-
-**Solution:**
-
-**Windows:**
-```powershell
-# Find process using port 8001
-netstat -ano | findstr :8001
-# Kill the process
-taskkill /PID <PID> /F
-```
-
-**Mac/Linux:**
-```bash
-# Find and kill process
-lsof -ti:8001 | xargs kill -9
-```
-
-Or change ports in `config.ts`:
-```typescript
-ports: {
-  backend: 8002,  // Changed from 8001
-  frontend: 5174, // Changed from 5173
-}
-```
-*Don't forget to update `.env` VITE_BACKEND_API_URL accordingly!*
-
----
-
-### Issue 4: Module Not Found Errors
-
-**Symptoms:**
-- `Cannot find module` errors
-- Build fails
-
-**Solution:**
-```bash
-# Clean install
-npm run clean
-npm run install:all
-npm run build
-npm start
-```
-
----
-
-### Issue 5: Vite Build Fails
-
-**Symptoms:**
-- Frontend build errors
-- TypeScript errors
-
-**Solution:**
-```bash
-cd frontend
-npm install
-npm run build
-```
-
----
-
-### Quick Checks ✓
-
-- [ ] Node.js version 18 or higher? (`node -v`)
-- [ ] `.env` file exists in root?
-- [ ] `GOOGLE_SAFE_BROWSING_API_KEY` set in `.env`?
-- [ ] `VITE_BACKEND_API_URL=http://localhost:8001` in `.env`?
-- [ ] Ports 8001 and 5173 available?
-- [ ] All dependencies installed? (`npm run install:all`)
-
----
-
-### Still Having Issues?
-
-1. Run `npm run verify` to check setup
-2. Check [GitHub Issues](https://github.com/tbhvishal/ClickShield/issues)
-3. Create a new issue with error details
-
-</details>
-
-<details>
-<summary><strong>📁 Project Structure</strong></summary>
-
-```
-ClickShield/
-├── .env                    # ⚠️ Your local config (DO NOT COMMIT)
-├── .env.example            # Template for .env
-├── config.ts               # Port numbers and app settings
-├── package.json            # Root package file
-├── start.js                # Development startup script
-├── verify-setup.js         # Setup verification script
-├── README.md               # This file
-├── backend/                # Backend Express API
-│   ├── src/
-│   │   ├── server.ts       # Server entry point
-│   │   ├── app.ts          # Express app configuration
-│   │   └── api/
-│   │       └── check-url.ts # URL checking endpoint
-│   ├── package.json
-│   └── tsconfig.json
-└── frontend/               # Frontend React App
-    ├── src/
-    │   ├── App.tsx         # Main React component
-    │   ├── main.tsx        # React entry point
-    │   ├── components/     # React components
-    │   └── utils/          # Utility functions
-    ├── package.json
-    └── vite.config.ts
-```
-
-</details>
-
----
 
 ## <img src="https://api.iconify.design/mdi:scale-balance.svg?color=%2310b981" width="24"/> License
 

@@ -119,6 +119,6 @@ if (errors.length === 0) {
   process.exit(0);
 } else {
   console.log('\n⚠️  Please fix the errors above before running npm start.\n');
-  console.log('📖 See TROUBLESHOOTING.md for detailed solutions.\n');
+  console.log('📖 See the Troubleshooting section in README.md for detailed solutions.\n');
   process.exit(1);
 }
