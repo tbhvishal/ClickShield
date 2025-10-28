@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { PredictionResult } from '../../App'
-import { CheckCircle, XCircle, Globe, Target, Info, Copy, CheckIcon, Lock, Shield, AlertTriangle, Award, Zap, FileText } from 'lucide-react'
+import { 
+  CheckCircle, XCircle, Globe, Target, Info, Copy, CheckIcon, Lock, Shield, 
+  AlertTriangle, Award, Zap, FileText, Fish, Bug, Ban, AlertOctagon, 
+  HelpCircle, Monitor, Laptop, Server, Smartphone, Apple, Chrome, Link, 
+  ShieldAlert, MonitorSmartphone
+} from 'lucide-react'
 import { generatePDFReport } from '../../utils'
 
 interface ResultCardProps {
@@ -487,10 +492,11 @@ Matches Found: ${result.matches?.length || 0}`
               <div className="flex-1">
                 <div className="flex items-center space-x-2 mb-2">
                   <h4 className="text-xl font-bold text-red-900 dark:text-red-100">
-                    ⚠️ Detected Threats ({result.matches.length})
+                    Detected Threats ({result.matches.length})
                   </h4>
-                  <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200 text-xs font-bold rounded-full border border-red-300 dark:border-red-700">
-                    HIGH RISK
+                  <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200 text-xs font-bold rounded-full border border-red-300 dark:border-red-700 inline-flex items-center space-x-1">
+                    <ShieldAlert className="w-3 h-3" />
+                    <span>HIGH RISK</span>
                   </span>
                 </div>
                 <p className="text-sm text-red-700 dark:text-red-300 leading-relaxed">
@@ -503,55 +509,58 @@ Matches Found: ${result.matches?.length || 0}`
               {result.matches.map((match: any, index: number) => {
                 // Define user-friendly threat explanations
                 const getThreatInfo = (threatType: string) => {
-                  const threats: Record<string, { title: string; description: string; icon: string; action: string }> = {
+                  const threats: Record<string, { title: string; description: string; IconComponent: any; action: string }> = {
                     'SOCIAL_ENGINEERING': {
-                      title: '🎣 Phishing / Social Engineering Attack',
+                      title: 'Phishing / Social Engineering Attack',
                       description: 'This site attempts to trick visitors into revealing sensitive information like passwords, credit card numbers, or personal data by impersonating legitimate websites or services.',
-                      icon: '🎭',
+                      IconComponent: Fish,
                       action: 'Never enter login credentials or personal information on this site.'
                     },
                     'MALWARE': {
-                      title: '🦠 Malware Distribution',
+                      title: 'Malware Distribution',
                       description: 'This website is known to distribute malicious software that can harm your device, steal data, or give attackers unauthorized access to your system.',
-                      icon: '☣️',
+                      IconComponent: Bug,
                       action: 'Do not download any files or click on links from this site.'
                     },
                     'UNWANTED_SOFTWARE': {
-                      title: '⚠️ Unwanted Software',
+                      title: 'Unwanted Software',
                       description: 'This site may install unwanted programs that change browser settings, display excessive ads, track your activity, or consume system resources without your consent.',
-                      icon: '🚫',
+                      IconComponent: Ban,
                       action: 'Avoid installing any software or browser extensions from this site.'
                     },
                     'POTENTIALLY_HARMFUL_APPLICATION': {
-                      title: '🔴 Potentially Harmful Application',
+                      title: 'Potentially Harmful Application',
                       description: 'This website may host applications that exhibit suspicious behavior, collect excessive data, or perform actions that could compromise your privacy and security.',
-                      icon: '⚡',
+                      IconComponent: AlertOctagon,
                       action: 'Do not download or run any applications from this source.'
                     }
                   }
                   return threats[threatType] || {
-                    title: '❌ Unknown Security Threat',
+                    title: 'Unknown Security Threat',
                     description: 'This website has been flagged for security concerns. The specific nature of the threat is being analyzed.',
-                    icon: '⚠️',
+                    IconComponent: HelpCircle,
                     action: 'Exercise extreme caution and avoid interacting with this site.'
                   }
                 }
 
                 const getPlatformInfo = (platformType: string) => {
-                  const platforms: Record<string, string> = {
-                    'ANY_PLATFORM': '💻 All Devices & Platforms',
-                    'WINDOWS': '🪟 Windows',
-                    'LINUX': '🐧 Linux',
-                    'ANDROID': '🤖 Android',
-                    'OSX': '🍎 macOS',
-                    'IOS': '📱 iOS',
-                    'CHROME': '🌐 Chrome',
-                    'ALL_PLATFORMS': '🌍 All Platforms'
+                  const platforms: Record<string, { name: string; IconComponent: any }> = {
+                    'ANY_PLATFORM': { name: 'All Devices & Platforms', IconComponent: MonitorSmartphone },
+                    'WINDOWS': { name: 'Windows', IconComponent: Monitor },
+                    'LINUX': { name: 'Linux', IconComponent: Server },
+                    'ANDROID': { name: 'Android', IconComponent: Smartphone },
+                    'OSX': { name: 'macOS', IconComponent: Apple },
+                    'IOS': { name: 'iOS', IconComponent: Smartphone },
+                    'CHROME': { name: 'Chrome', IconComponent: Chrome },
+                    'ALL_PLATFORMS': { name: 'All Platforms', IconComponent: Laptop }
                   }
-                  return platforms[platformType] || '❓ Unknown Platform'
+                  return platforms[platformType] || { name: 'Unknown Platform', IconComponent: HelpCircle }
                 }
 
                 const threatInfo = getThreatInfo(match.threatType || '')
+                const platformInfo = getPlatformInfo(match.platformType || '')
+                const ThreatIcon = threatInfo.IconComponent
+                const PlatformIcon = platformInfo.IconComponent
                 
                 return (
                   <motion.div
@@ -565,14 +574,16 @@ Matches Found: ${result.matches?.length || 0}`
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
-                          <span className="text-2xl">{threatInfo.icon}</span>
+                          <div className="p-1.5 bg-gradient-to-br from-red-500 to-rose-600 rounded-lg">
+                            <ThreatIcon className="w-4 h-4 text-white" />
+                          </div>
                           <h5 className="text-base font-bold text-red-900 dark:text-red-100">
                             {threatInfo.title}
                           </h5>
                         </div>
                         <span className="inline-flex items-center text-xs font-semibold text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/40 px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-700">
-                          <Globe className="w-3 h-3 mr-1.5" />
-                          {getPlatformInfo(match.platformType || '')}
+                          <PlatformIcon className="w-3.5 h-3.5 mr-1.5" />
+                          {platformInfo.name}
                         </span>
                       </div>
                     </div>
@@ -585,7 +596,10 @@ Matches Found: ${result.matches?.length || 0}`
                       <div className="flex items-start space-x-2 p-3 bg-red-100 dark:bg-red-900/40 rounded-lg border border-red-200 dark:border-red-800">
                         <Shield className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
                         <p className="text-xs font-semibold text-red-800 dark:text-red-200">
-                          <strong>🛡️ Recommended Action:</strong> {threatInfo.action}
+                          <strong className="inline-flex items-center space-x-1">
+                            <Shield className="w-3 h-3" />
+                            <span>Recommended Action:</span>
+                          </strong> {threatInfo.action}
                         </p>
                       </div>
                     </div>
@@ -593,8 +607,9 @@ Matches Found: ${result.matches?.length || 0}`
                     {/* Malicious URL */}
                     {match.threat?.url && (
                       <div className="mt-3">
-                        <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1.5 block">
-                          🔗 Flagged URL:
+                        <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1.5 flex items-center space-x-1">
+                          <Link className="w-3 h-3" />
+                          <span>Flagged URL:</span>
                         </label>
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                           <p className="text-xs text-gray-700 dark:text-gray-300 font-mono break-all leading-relaxed">
@@ -629,10 +644,13 @@ Matches Found: ${result.matches?.length || 0}`
             <div className="mt-6 p-4 bg-gradient-to-r from-red-600 to-rose-600 rounded-xl shadow-lg border border-red-500">
               <div className="flex items-start space-x-3">
                 <div className="p-2 bg-white/20 rounded-lg flex-shrink-0">
-                  <Shield className="w-5 h-5 text-white" />
+                  <ShieldAlert className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h6 className="text-white font-bold text-sm mb-1">🚨 Security Advisory</h6>
+                  <h6 className="text-white font-bold text-sm mb-1 flex items-center space-x-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    <span>Security Advisory</span>
+                  </h6>
                   <p className="text-white/90 text-xs leading-relaxed">
                     This website has been verified as dangerous by Google Safe Browsing. Close this page immediately and report it if you received it via email or message. <strong>Never trust urgent requests for personal information.</strong>
                   </p>
