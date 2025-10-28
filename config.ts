@@ -1,6 +1,10 @@
 /**
  * Application Configuration
  * Simple port defaults for backend and frontend
+ * 
+ * ⚠️ IMPORTANT: If you change these ports, update .env file too!
+ *    - Backend port must match in VITE_BACKEND_API_URL
+ *    - Frontend port must match your Vite dev server
  */
 
 export const config = {
