@@ -57,23 +57,23 @@ ClickShield is a modern, user-friendly web application that helps users identify
 
 ### <img src="https://api.iconify.design/mdi:server.svg?color=%2310b981" alt="Backend" width="20" height="20"> Backend
 - <img src="https://api.iconify.design/logos:nodejs-icon.svg" width="18"/> **Node.js** - JavaScript runtime
-- <img src="https://api.iconify.design/logos:express.svg" width="18"/> **Express.js** - Web application framework
-- <img src="https://api.iconify.design/mdi:key.svg?color=%23ef4444" width="18"/> **Google Safe Browsing API** - Threat intelligence
+- <img src="https://api.iconify.design/simple-icons:express?color=%23000000" width="18"/> <img src="https://api.iconify.design/simple-icons:express?color=%23ffffff" width="18"/> **Express.js** - Web application framework
+- <img src="https://api.iconify.design/logos:google-icon.svg" width="18"/> **Google Safe Browsing API** - Threat intelligence
 
 
 ### <img src="https://api.iconify.design/mdi:tools.svg?color=%236b7280" alt="Tools" width="20" height="20"> Development Tools
 - <img src="https://api.iconify.design/logos:eslint.svg" width="18"/> **ESLint** - Code linting
-- <img src="https://api.iconify.design/mdi:git.svg?color=%23f59e0b" width="18"/> **Git** - Version control
-- <img src="https://api.iconify.design/mdi:package-variant.svg?color=%233b82f6" width="18"/> **NPM** - Package management
+- <img src="https://api.iconify.design/logos:git-icon.svg" width="18"/> **Git** - Version control
+- <img src="https://api.iconify.design/logos:npm-icon.svg" width="18"/> **NPM** - Package management
 
 ## <img src="https://api.iconify.design/mdi:package-down.svg?color=%23ef4444" width="24"/> Installation
 
 ### <img src="https://api.iconify.design/mdi:alert-decagram.svg?color=%23ef4444" width="20"/> Prerequisites
 
 Before you begin, ensure you have the following installed:
-- <img src="https://api.iconify.design/logos:nodejs.svg" alt="Node.js" width="16" height="16"> **Node.js** (version 18 or higher)
-- <img src="https://api.iconify.design/mdi:package.svg?color=%233b82f6" width="16"/> **npm** or **yarn** package manager
-- <img src="https://api.iconify.design/mdi:key.svg?color=%23ef4444" width="16"/> **Google Safe Browsing API Key**
+- <img src="https://api.iconify.design/logos:nodejs-icon.svg" alt="Node.js" width="16" height="16"> **Node.js** (version 18 or higher)
+- <img src="https://api.iconify.design/logos:npm-icon.svg" width="16"/> **npm** or <img src="https://api.iconify.design/logos:yarn.svg" width="16"/> **yarn** package manager
+- <img src="https://api.iconify.design/logos:google-icon.svg" width="16"/> **Google Safe Browsing API Key**
 
 ### <img src="https://api.iconify.design/mdi:clipboard-list.svg?color=%23f59e0b" width="20"/> Setup Instructions
 
@@ -161,15 +161,15 @@ VITE_BACKEND_API_URL=http://localhost:8001  # Important: Must be set for local d
    - Leave `VITE_BACKEND_API_URL` empty (or don't set it)
 
 4. **Deploy:**
-   - **Vercel**: Use the included `vercel.json` configuration
-   - **Other platforms**: Serve `frontend/dist/` as static files and run backend from `backend/dist/`
+   - **<img src="https://api.iconify.design/logos:vercel-icon.svg" width="16"/> Vercel**: Use the included `vercel.json` configuration
+   - **<img src="https://api.iconify.design/logos:aws.svg" width="16"/> Other platforms**: Serve `frontend/dist/` as static files and run backend from `backend/dist/`
 
 **⚠️ Important:** 
 - **Never use `npm start` for production** - it's for local development only
 - Always use `npm run build` for production builds
 - Keep one `.env` file in the root directory for all configurations
 
-### <img src="https://api.iconify.design/mdi:key.svg?color=%23ef4444" width="20"/> Google Safe Browsing API Setup
+### <img src="https://api.iconify.design/logos:google-icon.svg" width="20"/> Google Safe Browsing API Setup
 
 - Visit [Google Cloud Console](https://console.cloud.google.com/)
 - Create a new project or select existing one
@@ -479,7 +479,7 @@ For API implementation details (endpoints, request/response shapes and error han
 
 ---
 
-## <img src="https://api.iconify.design/mdi:github.svg?color=%2310b981" width="24"/> Contributing
+## <img src="https://api.iconify.design/mdi:hand-heart.svg?color=%23ef4444" width="24"/> Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
@@ -495,7 +495,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
   ```bash
   git commit -m 'Add amazing feature'
   ```
-4. <img src="https://api.iconify.design/mdi:arrow-up-bold.svg?color=%238b5cf6" width="18"/> **Push to the branch**
+4. <img src="https://api.iconify.design/mdi:upload.svg?color=%238b5cf6" width="18"/> **Push to the branch**
   ```bash
   git push origin feature/amazing-feature
   ```
@@ -527,15 +527,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <p><strong>Made with <img src="https://api.iconify.design/mdi:heart.svg?color=%23ef4444" width="16"/> by Vishal Sharma</strong></p>
 
   <p>
-  <a href="https://github.com/tbhvishal/ClickShield"><img src="https://api.iconify.design/mdi:github.svg?color=%233b82f6" width="24"/></a>
+  <a href="https://github.com/tbhvishal/ClickShield"><img src="https://api.iconify.design/logos:github-icon.svg" width="24"/></a>
   &nbsp;
-  <a href="mailto:vishal95844@gmail.com"><img src="https://api.iconify.design/mdi:email.svg?color=%23ef4444" width="24"/></a>
+  <a href="mailto:vishal95844@gmail.com"><img src="https://api.iconify.design/logos:google-gmail.svg" width="24"/></a>
   </p>
 </div>
 
 ---
 
 <div align="center">
-  <p><strong>🛡️ Stay Safe Online with ClickShield 🛡️</strong></p>
+  <p><strong><img src="https://api.iconify.design/mdi:shield-check.svg?color=%2310b981" width="24"/> Stay Safe Online with ClickShield <img src="https://api.iconify.design/mdi:shield-check.svg?color=%2310b981" width="24"/></strong></p>
   <p><em>Advanced threat detection for a safer internet experience</em></p>
 </div>
