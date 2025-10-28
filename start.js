@@ -3,12 +3,10 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-
 function run(cmd, cwd) {
   console.log(`\n> ${cmd} (in ${cwd || process.cwd()})`);
   execSync(cmd, { stdio: 'inherit', cwd: cwd || process.cwd() });
 }
-
 function ensureConcurrentlyInstalled() {
   try {
     require.resolve('concurrently');
@@ -17,7 +15,6 @@ function ensureConcurrentlyInstalled() {
     run('npm install -g concurrently');
   }
 }
-
 
 function installAll() {
   // Install dependencies for the main project if package.json is there
