@@ -12,11 +12,15 @@ const cache = new Map<string, { data: any; timestamp: number }>();
 const normalizeUrlKey = (u: string): string => {
   try {
     const p = new URL(u);
-    const port = p.port ? `:${p.port}` : '';
-    const pathname = p.pathname.replace(/\/$/, '');
-    return `${p.protocol}//${p.hostname}${port}${pathname}`;
+    const isDefaultPort = (p.protocol === 'https:' && p.port === '443') || (p.protocol === 'http:' && p.port === '80');
+    const port = p.port && !isDefaultPort ? `:${p.port}` : '';
+    // Keep full path, query, and hash to avoid conflating different pages or query variants
+    const fullPath = `${p.pathname}${p.search}${p.hash}`;
+    // Lowercase the hostname for normalization; leave path as-is (can be case-sensitive on some servers)
+    return `${p.protocol}//${p.hostname.toLowerCase()}${port}${fullPath}`;
   } catch {
-    return u.replace(/\/$/, '');
+    // If URL constructor fails, return raw string as-is for key stability
+    return u;
   }
 };
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -28,7 +32,7 @@ const getCachedResult = (url: string): any | null => {
     return cached.data;
   }
   if (cached) {
-    cache.delete(url); // Remove expired entry
+    cache.delete(key); // Remove expired entry
   }
   return null;
 };
@@ -92,14 +96,15 @@ router.post('/check-url', async (req: Request, res: Response) => {
     }
   };
   console.log('--- Incoming /check-url request ---');
-  const { url } = req.body;
-  if (!url || typeof url !== 'string') {
+  // Sanitize and validate input URL
+  const rawUrl = req.body?.url;
+  if (!rawUrl || typeof rawUrl !== 'string') {
     return res.status(400).json({
       error: 'Invalid or missing URL.',
       details: 'Please provide a valid URL string.'
     });
   }
-  const trimmedUrl = url.trim();
+  const trimmedUrl = rawUrl.trim().replace(/^['"]+|['"]+$/g, '');
   
   if (!trimmedUrl || /[\s\x00-\x1F\x7F"'<>`]/.test(trimmedUrl)) {
     return res.status(400).json({
@@ -307,6 +312,15 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use('/', router);
+
+// Final error handler to ensure JSON responses instead of HTML error pages
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error('Unhandled server error:', err);
+  res.status(500).json({
+    error: 'Internal server error',
+    details: 'Something went wrong while processing your request.'
+  });
+});
 
 export default app;
 
