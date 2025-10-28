@@ -52,13 +52,6 @@ if (fs.existsSync(envPath)) {
     warnings.push('VITE_BACKEND_API_URL may not be configured correctly for local dev');
   }
   
-  // Check PORT
-  if (envContent.includes('PORT=8001')) {
-    success.push('Backend PORT configured ✓');
-  } else {
-    warnings.push('PORT not explicitly set (will default to 8001)');
-  }
-  
 } else {
   errors.push('.env file not found! Copy .env.example to .env');
 }

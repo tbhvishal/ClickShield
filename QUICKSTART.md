@@ -13,10 +13,9 @@ cp .env.example .env
 Edit `.env` and add your Google Safe Browsing API key:
 ```env
 GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-PORT=8001
-FRONTEND_PORT=5173
 VITE_BACKEND_API_URL=http://localhost:8001
 ```
+**Note:** Port numbers are defined in `config.ts` (backend: 8001, frontend: 5173)
 
 ### Step 3️⃣: Verify Setup (Optional but Recommended)
 ```bash

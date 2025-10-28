@@ -55,17 +55,16 @@
 **For Local Development** (`.env`):
 ```env
 GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-PORT=8001
-FRONTEND_PORT=5173
 VITE_BACKEND_API_URL=http://localhost:8001  # ← REQUIRED for local!
 ```
+
+**Note:** Port numbers (8001, 5173) are defined in `config.ts` - no need to set them in `.env`.
 
 **For Production/Vercel** (set in Vercel Dashboard):
 - `GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here`
 - `VITE_BACKEND_API_URL` should be EMPTY or not set
 
 ---
-
 ### 📦 Issue: "Module not found" or dependency errors
 
 **Solution:**
