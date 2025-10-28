@@ -172,6 +172,16 @@ router.post('/check-url', async (req: Request, res: Response) => {
   for (const variant of urlVariants) {
     // Following any redirects to find the actual final URL
     const finalUrl = await getFinalRedirectUrl(variant);
+    // Prefer checking SSL on the final URL (after redirects) so http→https isn't reported as invalid
+    let sslVerifiedForFinal = false;
+    try {
+      const parsedFinal = new URL(finalUrl);
+      if (parsedFinal.protocol === 'https:') {
+        sslVerifiedForFinal = await checkSSL(finalUrl);
+      }
+    } catch {
+      // If URL parsing fails, leave sslVerifiedForFinal as false
+    }
     const urlsToCheck = finalUrl !== variant ? [variant, finalUrl] : [variant];
     for (const urlToCheck of urlsToCheck) {
       // Count this URL as being evaluated (DNS + optional Safe Browsing)
@@ -190,7 +200,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
             confidence: 'MEDIUM',
             matches: [],
             checked_variations: checkedUrls.size,
-            ssl_verified: false, // Unreachable domains can't have valid SSL
+            ssl_verified: sslVerifiedForFinal,
             recommendation: 'Do not trust this website. The domain does not resolve.',
             cached: false,
             warning: true
@@ -239,7 +249,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
             confidence: 'HIGH',
             matches: data.matches,
             checked_variations: checkedUrls.size,
-            ssl_verified: await checkSSL(urlToCheck),
+            ssl_verified: sslVerifiedForFinal,
             recommendation: 'Do not visit this website. It has been flagged as dangerous.',
             cached: false
           };
@@ -247,7 +257,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
           return res.json(threatResult);
         } else {
           // Checking the SSL certificate if it's an HTTPS site
-          const sslVerified = await checkSSL(urlToCheck);
+          const sslVerified = sslVerifiedForFinal;
           // Saving this safe result in the cache for later and return immediately
           const safeResult = {
             url: urlToCheck,
