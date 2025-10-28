@@ -112,7 +112,7 @@ Before you begin, ensure you have the following installed:
   
   **If all checks pass ✅, you're ready to go!**
 
-4. **<img src="https://api.iconify.design/mdi:play.svg?color=%2310b981" width="16"/> Start the application in development mode**
+4. **<img src="https://api.iconify.design/mdi:rocket-launch.svg?color=%2310b981" width="16"/> Start the application in development mode**
   ```bash
   npm start
   ```
