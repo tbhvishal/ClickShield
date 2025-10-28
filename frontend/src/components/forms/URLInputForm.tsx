@@ -48,16 +48,19 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const urlToSubmit = displayUrl.trim()
-    if (urlToSubmit) {
-      onSubmit(urlToSubmit)
+    // Sanitize: trim whitespace and strip surrounding quotes that may be pasted accidentally
+    const sanitized = displayUrl
+      .trim()
+      .replace(/^['"]+|['"]+$/g, '')
+    if (sanitized) {
+      onSubmit(sanitized)
     }
   }
 
   const handlePaste = async () => {
     try {
       const text = await navigator.clipboard.readText()
-      setUrl(text)
+      setUrl(text.trim().replace(/^['"]+|['"]+$/g, ''))
     } catch (err) {
       // Couldn't paste from clipboard
     }
@@ -214,16 +217,32 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
                 </motion.button>
               </div>
 
-              {displayUrl && displayUrl !== url && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-sm text-gray-600 dark:text-gray-400 mt-3 flex items-center space-x-2"
-                >
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Will check: <span className="font-semibold text-blue-600 dark:text-blue-400">{displayUrl}</span></span>
-                </motion.p>
-              )}
+              {displayUrl && displayUrl !== url && (() => {
+                let suffix = ''
+                try {
+                  const normalized = displayUrl.includes('://') ? displayUrl : `https://${displayUrl}`
+                  const u = new URL(normalized)
+                  const hasPath = !!u.pathname && u.pathname !== '/'
+                  const hasQueryOrHash = !!u.search || !!u.hash
+                  if (hasPath || hasQueryOrHash) {
+                    suffix = ' (path and query included)'
+                  }
+                } catch (e) {
+                  // Ignore parse errors; just show basic echo without suffix
+                }
+                return (
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-sm text-gray-600 dark:text-gray-400 mt-3 flex items-center space-x-2"
+                  >
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span>
+                      Will scan exactly this URL{suffix}: <span className="font-semibold text-blue-600 dark:text-blue-400">{displayUrl}</span>
+                    </span>
+                  </motion.p>
+                )
+              })()}
 
               {validationMessage && (
                 <motion.p
