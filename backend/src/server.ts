@@ -12,7 +12,12 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 import app from './app.js';
 
 const PORT = process.env.PORT || 8001;
+const FRONTEND_URL = process.env.VITE_BACKEND_API_URL ? 'http://localhost:5173' : 'Production';
+
 app.listen(PORT, () => {
   console.log(`✅ Backend server running on http://localhost:${PORT}`);
   console.log(`✅ API endpoint: http://localhost:${PORT}/check-url`);
+  if (FRONTEND_URL !== 'Production') {
+    console.log(`🌐 Frontend available at: ${FRONTEND_URL}`);
+  }
 });
