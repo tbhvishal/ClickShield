@@ -526,15 +526,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
   <p><strong>Made with <img src="https://api.iconify.design/mdi:heart.svg?color=%23ef4444" width="16"/> by Vishal Sharma</strong></p>
 
-  <p>
-  <a href="https://github.com/tbhvishal/ClickShield"><img src="https://img.icons8.com/?size=100&id=WCL5hPLvhUjQ&format=png&color=000000
-" width="24"/></a>
-  &nbsp;
-  <a href="mailto:vishalsharmax@zohomail.in
-"><img src="https://api.iconify.design/logos:google-gmail.svg" width="24"/></a>
-  </p>
-</div>
-
 ---
 
 <div align="center">
