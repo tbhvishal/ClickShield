@@ -81,14 +81,14 @@ Matches Found: ${result.matches?.length || 0}`
       if (result.threat_type === 'UNREACHABLE_DOMAIN') {
         return {
           title: 'Domain Not Available',
-          subtitle: 'This website cannot be reached - treat as potentially risky',
+          subtitle: result.threat_description || 'This website cannot be reached - treat as potentially risky',
           icon: AlertTriangle,
           badge: 'UNREACHABLE'
         }
       }
       return {
         title: 'Caution Required',
-        subtitle: 'Additional verification recommended',
+        subtitle: result.threat_description || 'Additional verification recommended',
         icon: AlertTriangle,
         badge: 'CAUTION'
       }

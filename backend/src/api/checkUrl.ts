@@ -42,16 +42,18 @@ const setCachedResult = (url: string, data: any): void => {
   cache.set(key, { data, timestamp: Date.now() });
 };
 
-const getFinalRedirectUrl = async (url: string): Promise<string> => {
+const getFinalRedirectUrl = async (url: string): Promise<{ finalUrl: string; status: number | null }> => {
   try {
     const response = await axios.get(url, {
       maxRedirects: 5,
       timeout: 7000,
       validateStatus: () => true 
     });
-    return response.request?.res?.responseUrl || url;
+    const finalUrl = response.request?.res?.responseUrl || url;
+    const status = typeof response.status === 'number' ? response.status : null;
+    return { finalUrl, status };
   } catch {
-    return url;
+    return { finalUrl: url, status: null };
   }
 };
 
@@ -171,7 +173,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
 
   for (const variant of urlVariants) {
     // Following any redirects to find the actual final URL
-    const finalUrl = await getFinalRedirectUrl(variant);
+    const { finalUrl, status: finalStatus } = await getFinalRedirectUrl(variant);
     // Prefer checking SSL on the final URL (after redirects) so http→https isn't reported as invalid
     let sslVerifiedForFinal = false;
     try {
@@ -250,6 +252,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
             matches: data.matches,
             checked_variations: checkedUrls.size,
             ssl_verified: sslVerifiedForFinal,
+            http_status: finalStatus ?? undefined,
             recommendation: 'Do not visit this website. It has been flagged as dangerous.',
             cached: false
           };
@@ -259,7 +262,7 @@ router.post('/check-url', async (req: Request, res: Response) => {
           // Checking the SSL certificate if it's an HTTPS site
           const sslVerified = sslVerifiedForFinal;
           // Saving this safe result in the cache for later and return immediately
-          const safeResult = {
+          const safeResult: any = {
             url: urlToCheck,
             safe: true,
             threat_type: 'NONE',
@@ -272,6 +275,16 @@ router.post('/check-url', async (req: Request, res: Response) => {
             recommendation: 'This website appears safe, but always exercise caution online.',
             cached: false
           };
+          // If the final page clearly does not exist (e.g., 404/410), mark as warning with context
+          if (typeof finalStatus === 'number' && finalStatus >= 400) {
+            safeResult.warning = true;
+            safeResult.threat_type = 'RESOURCE_STATUS';
+            safeResult.threat_description = `Page returned HTTP ${finalStatus}. No known threats detected but the specific page does not exist or is inaccessible.`;
+            safeResult.recommendation = 'Verify the URL path or try the site homepage.';
+            safeResult.http_status = finalStatus;
+          } else if (typeof finalStatus === 'number') {
+            safeResult.http_status = finalStatus;
+          }
           console.log('Safe result computed for', urlToCheck);
           setCachedResult(urlToCheck, safeResult);
           return res.json(safeResult);
