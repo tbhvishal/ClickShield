@@ -529,7 +529,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <p>
   <a href="https://github.com/tbhvishal/ClickShield"><img src="https://api.iconify.design/logos:github-icon.svg" width="24"/></a>
   &nbsp;
-  <a href="mailto:vishal95844@gmail.com"><img src="https://api.iconify.design/logos:google-gmail.svg" width="24"/></a>
+  <a href="mailto:vishalsharmax@zohomail.in
+"><img src="https://api.iconify.design/logos:google-gmail.svg" width="24"/></a>
   </p>
 </div>
 
