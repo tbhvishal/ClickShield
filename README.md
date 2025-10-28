@@ -30,7 +30,7 @@ ClickShield is a modern, user-friendly web application that helps users identify
 
 ### <img src="https://api.iconify.design/mdi:flash.svg?color=%23f59e0b" alt="Lightning" width="20" height="20"> Core Features
 
-- <img src="https://api.iconify.design/mdi:shield-check.svg?color=%2310b981" width="18"/> **Real-time Threat Detection**: Instant analysis using Google's Safe Browsing API
+- <img src="https://github.com/tbhvishal/ClickShield/blob/main/frontend/src/assets/500x500.png?raw=true" width="18"/> **Real-time Threat Detection**: Instant analysis using Google's Safe Browsing API
 - <img src="https://api.iconify.design/mdi:file-chart.svg?color=%233b82f6" width="18"/> **Comprehensive Reports**: Detailed security analysis with threat intelligence
 - <img src="https://api.iconify.design/mdi:history.svg?color=%238b5cf6" width="18"/> **Scan History**: Track and review previous security scans
 - <img src="https://api.iconify.design/mdi:certificate.svg?color=%23ef4444" width="18"/> **SSL Verification**: Check website certificate validity

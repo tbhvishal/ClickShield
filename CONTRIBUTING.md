@@ -92,5 +92,5 @@ Have an idea? [Open a feature request](https://github.com/tbhvishal/ClickShield/
 <div align="center">
   <p><strong><img src="https://api.iconify.design/mdi:heart.svg?color=%23ef4444" width="20"/> Thank you for contributing! <img src="https://api.iconify.design/mdi:heart.svg?color=%23ef4444" width="20"/></strong></p>
   <p><em>Together, we're making the internet safer!</em></p>
-  <img src="https://api.iconify.design/mdi:shield-check.svg?color=%2310b981" width="48"/>
+  <img src="https://github.com/tbhvishal/ClickShield/blob/main/frontend/src/assets/500x500.png?raw=true" width="48"/>
 </div>
