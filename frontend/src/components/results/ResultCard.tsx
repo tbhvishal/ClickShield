@@ -20,7 +20,7 @@ Platform: ${result.platform_type}
 Description: ${result.threat_description || ''}
 Confidence: ${result.confidence || ''}
 SSL Verified: ${result.ssl_verified !== undefined ? (result.ssl_verified ? 'Yes' : 'No') : 'Not Checked'}
-Variants Checked (incl. redirects): ${result.checked_variations || 1}
+Variations URL: ${result.checked_variations || 1}
 Cached: ${result.cached ? 'Yes' : 'No'}
 Cache Age: ${result.cache_age || 0} seconds
 Recommendation: ${result.recommendation || ''}
@@ -455,7 +455,7 @@ Matches Found: ${result.matches?.length || 0}`
                   <div className="p-2.5 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg ring-2 ring-white/40 dark:ring-gray-800/40 group-hover:scale-105 transition-transform duration-150">
                     <Zap className="w-4 h-4 text-white drop-shadow-md" />
                   </div>
-                  <h4 className="text-base font-bold text-gray-900 dark:text-white tracking-tight">Variants</h4>
+                  <h4 className="text-base font-bold text-gray-900 dark:text-white tracking-tight">Variations URL</h4>
                 </div>
                 <div className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
                   including redirects
