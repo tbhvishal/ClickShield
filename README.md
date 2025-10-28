@@ -83,17 +83,53 @@ Before you begin, ensure you have the following installed:
   cd ClickShield
   ```
 
+2. **<img src="https://api.iconify.design/mdi:file-document.svg?color=%23f59e0b" width="16"/> Configure environment variables**
+  ```bash
+  # Copy the example environment file
+  cp .env.example .env
+  
+  # Edit .env and add your Google Safe Browsing API key
+  # GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
+  ```
+  
+  **Important:** For local development, ensure your `.env` file contains:
+  ```env
+  GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
+  PORT=8001
+  FRONTEND_PORT=5173
+  VITE_BACKEND_API_URL=http://localhost:8001
+  ```
 
-
-2. <img src="https://api.iconify.design/mdi:play.svg?color=%2310b981" width="16"/> **Start the application in development mode**
+3. **<img src="https://api.iconify.design/mdi:play.svg?color=%2310b981" width="16"/> Start the application in development mode**
   ```bash
   npm start
   ```
-  *This will install all dependencies, build the project, and start both frontend and backend servers for local development.*
+  *This will:*
+  - Install all dependencies (frontend + backend)
+  - Build the project
+  - Start backend server on `http://localhost:8001`
+  - Start frontend dev server on `http://localhost:5173`
+  - Open your browser automatically
 
 ---
 
 ## <img src="https://api.iconify.design/mdi:cloud.svg?color=%233b82f6" width="24"/> Production & Cloud Deployment
+
+### <img src="https://api.iconify.design/mdi:information.svg?color=%23f59e0b" width="20"/> Environment Configuration
+
+**For Local Development (`.env`):**
+```env
+GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
+PORT=8001
+FRONTEND_PORT=5173
+VITE_BACKEND_API_URL=http://localhost:8001  # Important: Must be set for local dev
+```
+
+**For Production/Vercel (`.env.production` or Vercel Dashboard):**
+```env
+GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
+VITE_BACKEND_API_URL=  # Leave empty - uses relative URLs
+```
 
 ### <img src="https://api.iconify.design/mdi:cloud-upload.svg?color=%2310b981" width="20"/> Deploying to Cloud Providers
 
@@ -106,13 +142,19 @@ Before you begin, ensure you have the following installed:
   npm run build
   ```
   - This builds the frontend (Vite) to `frontend/dist/` and the backend (TypeScript) to `backend/dist/`.
-3. **Serve the built frontend and backend:**
-  - Serve `frontend/dist/` as static files using your cloud provider's static hosting solution.
-  - Run the backend from `backend/dist/` as a Node.js server or deploy as serverless functions, depending on your cloud provider's capabilities.
+  
+3. **Configure environment variables in your cloud provider:**
+   - Set `GOOGLE_SAFE_BROWSING_API_KEY` in your cloud dashboard
+   - Leave `VITE_BACKEND_API_URL` empty (or don't set it)
 
-**Do not use `npm start` for production or cloud deployment.**
-  - `npm start` is for local development only.
-  - Always use `npm run build` for production builds.
+4. **Deploy:**
+   - **Vercel**: Use the included `vercel.json` configuration
+   - **Other platforms**: Serve `frontend/dist/` as static files and run backend from `backend/dist/`
+
+**⚠️ Important:** 
+- **Never use `npm start` for production** - it's for local development only
+- Always use `npm run build` for production builds
+- Keep one `.env` file in the root directory for all configurations
 
 ### <img src="https://api.iconify.design/mdi:key.svg?color=%23ef4444" width="20"/> Google Safe Browsing API Setup
 
