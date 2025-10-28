@@ -217,7 +217,7 @@ const URLInputForm = ({ onSubmit, isLoading }: URLInputFormProps) => {
                 </motion.button>
               </div>
 
-              {displayUrl && displayUrl !== url && (() => {
+              {displayUrl && !validationMessage && isValidUrl(displayUrl) && (() => {
                 let suffix = ''
                 try {
                   const normalized = displayUrl.includes('://') ? displayUrl : `https://${displayUrl}`
