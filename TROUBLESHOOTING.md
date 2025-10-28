@@ -60,11 +60,9 @@ FRONTEND_PORT=5173
 VITE_BACKEND_API_URL=http://localhost:8001  # ← REQUIRED for local!
 ```
 
-**For Production/Vercel** (Vercel Dashboard or `.env.production`):
-```env
-GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-# VITE_BACKEND_API_URL should be EMPTY or not set
-```
+**For Production/Vercel** (set in Vercel Dashboard):
+- `GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here`
+- `VITE_BACKEND_API_URL` should be EMPTY or not set
 
 ---
 

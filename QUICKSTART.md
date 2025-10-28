@@ -82,14 +82,12 @@ VITE_BACKEND_API_URL=http://localhost:8001
 **More help:** See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
 
 ---
-
 ## Project Structure
 
 ```
 ClickShield/
 ├── .env                    # ⚠️ Your local environment config (DO NOT COMMIT)
 ├── .env.example            # Template for .env
-├── .env.production         # Production environment template
 ├── package.json            # Root package file
 ├── start.js                # Development startup script
 ├── verify-setup.js         # Setup verification script

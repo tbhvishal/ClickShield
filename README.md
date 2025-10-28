@@ -137,11 +137,9 @@ FRONTEND_PORT=5173
 VITE_BACKEND_API_URL=http://localhost:8001  # Important: Must be set for local dev
 ```
 
-**For Production/Vercel (`.env.production` or Vercel Dashboard):**
-```env
-GOOGLE_SAFE_BROWSING_API_KEY=your_api_key_here
-VITE_BACKEND_API_URL=  # Leave empty - uses relative URLs
-```
+**For Production/Vercel (Vercel Dashboard):**
+- Set `GOOGLE_SAFE_BROWSING_API_KEY` in Vercel environment variables
+- Leave `VITE_BACKEND_API_URL` empty or unset - production uses relative URLs
 
 ### <img src="https://api.iconify.design/mdi:cloud-upload.svg?color=%2310b981" width="20"/> Deploying to Cloud Providers
 
